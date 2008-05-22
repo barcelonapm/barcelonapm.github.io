@@ -1,0 +1,476 @@
+<!-- BEGIN kwiki_screen -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<BASE HREF="http://barcelona.pm.org/Perli18n">
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>
+
+  Perli18n -
+
+
+  Barcelona Perl Mongers Wiki</title>
+    <link rel="stylesheet" type="text/css" href="http://web.archive.org/web/20070509163343/http://barcelona.pm.org/theme/tabnav/css/kwiki.css" />
+    <link rel="stylesheet" type="text/css" href="http://web.archive.org/web/20070509163343/http://barcelona.pm.org/css/toolbar.css" />
+    <link rel="stylesheet" type="text/css" href="http://web.archive.org/web/20070509163343/http://barcelona.pm.org/css/user_name.css" />
+    <link rel="stylesheet" type="text/css" href="http://web.archive.org/web/20070509163343/http://barcelona.pm.org/css/formatter.css" />
+    <link rel="stylesheet" type="text/css" href="http://web.archive.org/web/20070509163343/http://barcelona.pm.org/css/search.css" />
+  <link rel="icon" href="http://web.archive.org/web/20070509163343/http://barcelona.pm.org/favicon.ico" />
+  <link rel="start" href="http://web.archive.org/web/20070509163343/http://barcelona.pm.org/index.cgi" title="Home" />
+</head>
+<body>
+<div id="entire">
+<div id="title_pane">
+<img src="title.png" align="center" alt="Kwiki Logo" title="Barcelona Perl Mongers Wiki" />
+<span>
+<h1>
+<a href="index.cgi?action=search;search_term=Perli18n">Perli18n</a>
+</h1>
+</span>
+</div>
+
+<!-- BEGIN toolbar_pane -->
+<div class="toolbar">
+<ul id="nav">
+<li><!-- BEGIN search_box -->
+<form method="post" action="index.cgi" enctype="application/x-www-form-urlencoded" style="display: inline">
+<input type="text" name="search_term" size="8" value="Search" onfocus="this.value=''" />
+<input type="hidden" name="action" value="search" />
+</form>
+<!-- END search_box -->
+</li>
+<li><!-- BEGIN home_button -->
+<a href="BarcelonaPMWiki" accesskey="h" title="Home Page">
+<!-- BEGIN home_button_icon -->
+Home
+<!-- END home_button_icon -->
+
+</a>
+<!-- END home_button -->
+</li>
+<li><!-- BEGIN recent_changes_button -->
+<a href="index.cgi?action=recent_changes" accesskey="c" title="Recent Changes">
+<!-- BEGIN recent_changes_button_icon -->
+Changes
+<!-- END recent_changes_button_icon -->
+
+</a>
+<!-- END recent_changes_button -->
+</li>
+<li><!-- BEGIN user_preferences_button -->
+<a href="index.cgi?action=user_preferences" accesskey="u" title="User Preferences">
+<!-- BEGIN user_preferences_button_icon -->
+Preferences
+<!-- END user_preferences_button_icon -->
+
+</a>
+<!-- END user_preferences_button -->
+</li>
+<li><!-- BEGIN help_button -->
+<a href="index.cgi?Help" accesskey="h" title="Help">
+<!-- BEGIN help_button_icon -->
+Helpbutton
+<!-- END help_button_icon -->
+
+</a>
+<!-- END help_button -->
+</li>
+</ul>
+</div>
+<!-- END toolbar_pane -->
+
+
+
+<!-- BEGIN user_name_title -->
+<div id="user_name_title">
+<em>(You are 
+<a href="index.cgi?action=user_preferences">AnonymousGnome</a>)
+</em>
+</div>
+<!-- END user_name_title -->
+
+
+
+<div id="status_pane">
+<!-- BEGIN status_pane -->
+<div class="status">
+
+</div>
+<!-- END status_pane -->
+
+</div>
+
+<div id="content_pane">
+<!-- BEGIN display_content -->
+<div class="wiki">
+<h1>Perl i18n</h1>
+<ul>
+<li>Locales en Perl </li>
+<li>Uso de Unicode </li>
+<li>Modules para programes multi-linguales </li>
+</ul>
+
+
+<table class="formatter_table">
+<tr>
+<td>Documentacion</td>
+</tr>
+<tr>
+<td>perluniintro</td>
+<td>Perl Unicode Introduction</td>
+</tr>
+<tr>
+<td>perlunicode</td>
+<td>Unicode Support in Perl</td>
+</tr>
+<tr>
+<td>perllocale</td>
+<td>Perl locale handling</td>
+</tr>
+</table>
+
+
+<h2>Locales en Perl</h2>
+<h3>Como usar locales en perl</h3>
+<p>
+Probamos <tt>perl -V:d_setlocale</tt> para ver si perl crea que se puede usar locales en este sistema. &#40;Tiene que tener el valor <strong>define</strong>&#41;.
+
+</p>
+<p>
+Para usar los locales tenemos que tener <tt>use locale</tt> y una de las siguentes cosas para tener el entorno:
+
+</p>
+<ol>
+<li>Los variables del entorno tiene que estar</li>
+<li>El script tiene que usar <tt>setlocale</tt></li>
+</ol>
+
+
+<h4>use locale pragma</h4>
+<p>
+El uso de locales affecta: 
+
+</p>
+<ul>
+<li>Orden de strings y numeros &#40;p.j. <tt>cmp</tt>&#41;</li>
+<li>Expressiones regulares y conversiones de caja &#40;mayusculas, minusculas ...&#41;</li>
+<li>Formato de numeros, y fechas</li>
+</ul>
+
+<p>
+<strong>Nota:</strong> El uso de locales tiene implicaciones de seguridad, para ejemplo un usuario puede definir su proprio locale en que | ó &gt; sea alfanumerico. Entonces perl puede marcar algunas cosas 
+como inseguro &#40;con <em>taint</em>&#41; cuando usamos <tt>locale</tt>.
+
+</p>
+<h4>Variables de Entorno</h4>
+<table class="formatter_table">
+<tr>
+<td>PERL_BADLANG</td>
+<td>A string that can suppress Perl&#39;s warning about failed locale settings at startup</td>
+</tr>
+<tr>
+<td>LC_ALL</td>
+<td>Si está definido sobre-escribe todos las otras valores</td>
+</tr>
+<tr>
+<td>LC_CTYPE</td>
+<td>chooses the character type locale</td>
+</tr>
+<tr>
+<td>LC_COLLATE</td>
+<td>chooses the collation &#40;sorting&#41; locale</td>
+</tr>
+<tr>
+<td>LC_MONETARY</td>
+<td>chooses the monetary formatting locale</td>
+</tr>
+<tr>
+<td>LC_NUMERIC</td>
+<td>chooses the numeric format locale</td>
+</tr>
+<tr>
+<td>LC_TIME</td>
+<td>chooses the date and time formatting locale</td>
+</tr>
+<tr>
+<td>LC_MESSAGES</td>
+<td>chooses the message format</td>
+</tr>
+<tr>
+<td>LANG</td>
+<td>Se usa como valor para <em>XX</em> por defecto si <tt>LC_ALL</tt> ni <tt>LC_</tt><em>XX</em> están definidos.</td>
+</tr>
+</table>
+
+
+<p>
+De estos variables perl core no usa LC_MESSAGES ni LC_MONETARY pero podría ser que otros programas ó modules son affectados por su valor.
+
+</p>
+<h4>setlocale</h4>
+<p>
+Por defecto las valores están definido por el entorno pero aveces querremos cambiar las valores durante el ejeccion del programa y esto lo podemos hacer con la funcion <tt>setlocale</tt> &#40;dentro de <tt>POSIX</tt>&#41;. 
+
+
+</p>
+<pre class="formatter_pre">use POSIX qw&#40;locale_h&#41;;
+setlocale&#40; /variable/, /valor/ &#41;
+</pre>
+<p>
+Si no pasamos un segundo argumento y el primer valor no es LC_ALL devuelve el valor de este variable
+
+</p>
+<p>
+Si no pasamos un segundo argumento y el primer valor es LC_ALL el valor devuelto depende de la implementacion, probablemente sería una lista de locales ó un locale pero consulta el documentacion 
+de <tt>setlocale</tt> para detallos de como funciona.
+
+</p>
+<p>
+Si pasamos dos argumentos validos el variable tendrá el valor de segundo argumento y se devuelve el nuevo valor. &#40;Podría ser que el valor puesto no es exactamente lo mismo que el segundo 
+argumento - será un alias para el valor especificado
+
+</p>
+<p>
+Si el segundo argumento es &#34;&#34; el valor está puesto al valor definido por el entorno. Normalmente este el valor en el entorno cuando perl arrancaba depende del sistema cambios al entorno durante la ejecuccion del programa podría tomar effecto ó no.
+
+</p>
+<h4>Valores de los variables</h4>
+<p>
+Hemos dado dos maneras de definir los valores pero todavía no hemos visto que valores podemos dar!
+
+</p>
+<p>
+Pues el hecho es que depende del sistema, el forma basico es: 
+</p>
+<pre class="formatter_pre">idioma_region.codeset
+</pre>
+<p>
+pero en muchos casos ni region ni codeset están.
+
+</p>
+<p>
+Normalmente se usa valores definido por los estandares ISO
+
+</p>
+<table class="formatter_table">
+<tr>
+<td>idioma</td>
+<td>los codigos de dos letras desde ISO 639 &#40;p.j. ca&#41;</td>
+</tr>
+<tr>
+<td>region o pais</td>
+<td>los codigos de dos letras desde ISO 3166 &#40;p.j. es&#41;</td>
+</tr>
+<tr>
+<td>codeset</td>
+<td>Para valores de tipo latino viene de ISO 8859</td>
+</tr>
+</table>
+
+
+<p>
+Hay dos valores especiales <tt>C</tt> y <tt>POSIX</tt>. Estos son los valores que se usa por defecto si el programa no dispone de informacion de su entorno. Su idiomia es ingles &#40;estados unidos&#41; y el codeset es ASCII. No todos los sistemas tiene POSIX por lo tanto es mejor usar C cuando tengas que especificar este locale.
+
+</p>
+<h4>POSIX::localeconv&#40;&#41;</h4>
+<p>
+Te da informacion sobre los valores affectados por LC_NUMERIC y LC_MONETARY. 
+
+</p>
+<p>
+No toma argumentos y devuelve la informacion en una referencia a un hash.
+
+</p>
+<p>
+Para ejemplo, el siguente codigo devuelve , si LC_NUMERIC es <tt>es</tt> y . si es <tt>en</tt>:
+
+
+</p>
+<pre class="formatter_pre">use POSIX qw&#40;locale_h&#41;;
+my $decimales = ${localeconv&#40;&#41;}{&#39;decimal_point&#39;};
+</pre>
+<h2>Uso de Unicode</h2>
+<p>
+En perl el uso de locales y unicode juntos puede causar problemas, por lo 
+tanto mejor no usarlas juntas. Pero si tienes que usarlo hay algunas cosas
+que son importante saber.
+
+</p>
+<p>
+Sólo tratamos de perl &gt; 5.8 por que antes que esto unicode en perl
+era interesante para usar. 
+
+</p>
+<h3>use utf8</h3>
+<p>
+Aparte de 5.8 sólo tenemos que usar esto para indicar que nuestro 
+programa está codificado como utf8, esto nos permite usar utf8 en los
+nombres de identifadores y en los literales.
+
+</p>
+<h3>Unicode en entrada/salida</h3>
+<p>
+Hay que usar el sistema de entrada/salida de PerlIO, comprueba esto con: <tt>perl -V:useperlio</tt>.
+
+</p>
+<p>
+Para leer y escribir ficheros en utf8 tenemos que usar la capa &#40;<em>layer</em>&#41; utf8, esto se hacer cuando  
+tienes algo abierto con <tt>binmode&#40;STDOUT, &#34;:utf8&#34;&#41;;</tt> y a la hora de abrir un fichero con [open&#40;FH, &#34;&lt;:utf8&#34;, &#34;file&#34;&#41;]
+Se puede definir globalmente con el variable de entorno <strong>PERL_UNICODE</strong> o con la opcion de la linea de comando &lt;b&gt;-C&lt;/b&gt;.
+
+</p>
+<p>
+Tambíen se puede cambiar de codificacion usando &#34;:locale&#34; &#40;con el open pragma sólo&#41; o con las funciones de <tt>Encode</tt> pero como la cosa se pone mucha más complicado cuando tenemos que traducir
+entre codificaciones no hablamos de esto.
+
+</p>
+<p>
+==Modules
+
+</p>
+<p>
+Todos de estos son utiles:
+</p>
+<ul>
+<li>I18N::LangTags</li>
+<li>Locale::Country</li>
+<li>Locale::Language</li>
+<li>Locale::Maketext</li>
+<li>Unicode::Normalize</li>
+<li>Unicode::CharName</li>
+<li>Unicode::Collate</li>
+</ul>
+
+<h3>Locale::Maketext</h3>
+<p>
+Este module es la clave en una programa que tiene que tratar de varios
+lenguas. El uso se muestra aquí 
+
+</p>
+<h4>test.pl</h4>
+<pre class="formatter_pre">use PinckyWeb::L10N;
+use lib &#39;.&#39;;
+
+my $lh = PinckyWeb::L10N-&gt;get_handle&#40;&#41; || die &#34;What language? $!&#34;;
+print $lh-&gt;maketext&#40;&#34;Minimum &#40;[_1]&#41; is larger than maximum &#40;[_2]&#41;!\n&#34;, 20, 10&#41;;
+print $lh-&gt;maketext&#40;&#34;You won!&#34;&#41;, &#34;\n&#34;;
+print $lh-&gt;maketext&#40;&#34;Your search matched [quant,_1,document]!&#34;&#41;;
+</pre>
+<h4><a href="PinckyWeb" class="empty">PinckyWeb</a>/L10N.pm</h4>
+<pre class="formatter_pre">package PinckyWeb::L10N;
+use base qw&#40;Locale::Maketext&#41;;
+1;
+</pre>
+<h4><a href="PinckyWeb" class="empty">PinckyWeb</a>/L10N/es.pm</h4>
+<pre class="formatter_pre">package PinckyWeb::L10N::es;
+
+use base qw&#40;PinckyWeb::L10N&#41;;
+  %Lexicon = &#40;
+    &#34;Minimum &#40;[_1]&#41; is larger than maximum &#40;[_2]&#41;!\n&#34; =&gt; &#34;El minimo de [_1] es más grande que el maximo de [_2]\n&#34;,
+    &#39;You won!&#39; =&gt; &#39;Has ganado!&#39;,
+    &#39;Your search matched [quant,_1,document]!&#39; 
+       =&gt; sub { return &#34;La busqueda ha encontrado &#34;. Locale::Maketext-&gt;quant&#40;$_[1],&#34;documento&#34;&#41; },
+    &#39;_AUTO&#39; =&gt; 1,
+  &#41;;
+
+1;
+</pre>
+<h4><a href="PinckyWeb" class="empty">PinckyWeb</a>/L10N/en.pm</h4>
+<pre class="formatter_pre">package PinckyWeb::L10N::en;
+
+use base qw&#40;PinckyWeb::L10N&#41;;
+  %Lexicon = &#40;
+    &#39;_AUTO&#39; =&gt; 1,
+  &#41;;
+
+1;
+</pre>
+</div>
+<!-- BEGIN display_changed_by -->
+
+<!-- END display_changed_by -->
+
+<!-- END display_content -->
+
+</div>
+
+<div id="widgets_pane">
+<!-- BEGIN widgets_pane -->
+<div class="widgets">
+
+</div>
+<!-- END widgets_pane -->
+
+</div>
+
+<!-- BEGIN kwiki_end -->
+</body>
+
+<!-- SOME LINK HREF'S ON THIS PAGE HAVE BEEN REWRITTEN BY THE WAYBACK MACHINE
+OF THE INTERNET ARCHIVE IN ORDER TO PRESERVE THE TEMPORAL INTEGRITY OF THE SESSION. -->
+
+
+<SCRIPT language="Javascript">
+<!--
+
+// FILE ARCHIVED ON 20070509163343 AND RETRIEVED FROM THE
+// INTERNET ARCHIVE ON 20080522104921.
+// JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+// ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+// SECTION 108(a)(3)).
+
+   var sWayBackCGI = "http://web.archive.org/web/20070509163343/";
+
+   function xResolveUrl(url) {
+      var image = new Image();
+      image.src = url;
+      return image.src;
+   }
+   function xLateUrl(aCollection, sProp) {
+      var i = 0;
+      for(i = 0; i < aCollection.length; i++) {
+         if (typeof(aCollection[i][sProp]) == "string") { 
+          if (aCollection[i][sProp].indexOf("mailto:") == -1 &&
+             aCollection[i][sProp].indexOf("javascript:") == -1) {
+            if(aCollection[i][sProp].indexOf("http") == 0) {
+                aCollection[i][sProp] = sWayBackCGI + aCollection[i][sProp];
+            } else {
+                aCollection[i][sProp] = sWayBackCGI + xResolveUrl(aCollection[i][sProp]);
+            }
+         }
+         }
+      }
+   }
+
+   xLateUrl(document.getElementsByTagName("IMG"),"src");
+   xLateUrl(document.getElementsByTagName("A"),"href");
+   xLateUrl(document.getElementsByTagName("AREA"),"href");
+   xLateUrl(document.getElementsByTagName("OBJECT"),"codebase");
+   xLateUrl(document.getElementsByTagName("OBJECT"),"data");
+   xLateUrl(document.getElementsByTagName("APPLET"),"codebase");
+   xLateUrl(document.getElementsByTagName("APPLET"),"archive");
+   xLateUrl(document.getElementsByTagName("EMBED"),"src");
+   xLateUrl(document.getElementsByTagName("BODY"),"background");
+   var forms = document.getElementsByTagName("FORM");
+   if (forms) {
+       var j = 0;
+       for (j = 0; j < forms.length; j++) {
+              f = forms[j];
+              if (typeof(f.action)  == "string") {
+                 if(typeof(f.method)  == "string") {
+                     if(typeof(f.method) != "post") {
+                        f.action = sWayBackCGI + f.action;
+                     }
+                  }
+              }
+        }
+    }
+
+
+//-->
+</SCRIPT>
+
+</html>
