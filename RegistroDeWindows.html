@@ -1,0 +1,291 @@
+<!-- BEGIN kwiki_screen -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<BASE HREF="http://barcelona.pm.org/RegistroDeWindows">
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>
+
+  RegistroDeWindows -
+
+
+  Barcelona Perl Mongers Wiki</title>
+    <link rel="stylesheet" type="text/css" href="http://web.archive.org/web/20060924093345/http://barcelona.pm.org/theme/tabnav/css/kwiki.css" />
+    <link rel="stylesheet" type="text/css" href="http://web.archive.org/web/20060924093345/http://barcelona.pm.org/css/toolbar.css" />
+    <link rel="stylesheet" type="text/css" href="http://web.archive.org/web/20060924093345/http://barcelona.pm.org/css/user_name.css" />
+    <link rel="stylesheet" type="text/css" href="http://web.archive.org/web/20060924093345/http://barcelona.pm.org/css/formatter.css" />
+    <link rel="stylesheet" type="text/css" href="http://web.archive.org/web/20060924093345/http://barcelona.pm.org/css/search.css" />
+  <link rel="icon" href="http://web.archive.org/web/20060924093345/http://barcelona.pm.org/favicon.ico" />
+  <link rel="start" href="http://web.archive.org/web/20060924093345/http://barcelona.pm.org/index.cgi" title="Home" />
+</head>
+<body>
+<div id="entire">
+<div id="title_pane">
+<img src="title.png" align="center" alt="Kwiki Logo" title="Barcelona Perl Mongers Wiki" />
+<span>
+<h1>
+<a href="index.cgi?action=search;search_term=RegistroDeWindows">RegistroDeWindows</a>
+</h1>
+</span>
+</div>
+
+<!-- BEGIN toolbar_pane -->
+<div class="toolbar">
+<ul id="nav">
+<li><!-- BEGIN search_box -->
+<form method="post" action="index.cgi" enctype="application/x-www-form-urlencoded" style="display: inline">
+<input type="text" name="search_term" size="8" value="Search" onfocus="this.value=''" />
+<input type="hidden" name="action" value="search" />
+</form>
+<!-- END search_box -->
+</li>
+<li><!-- BEGIN home_button -->
+<a href="BarcelonaPMWiki" accesskey="h" title="Home Page">
+<!-- BEGIN home_button_icon -->
+Home
+<!-- END home_button_icon -->
+
+</a>
+<!-- END home_button -->
+</li>
+<li><!-- BEGIN recent_changes_button -->
+<a href="index.cgi?action=recent_changes" accesskey="c" title="Recent Changes">
+<!-- BEGIN recent_changes_button_icon -->
+Changes
+<!-- END recent_changes_button_icon -->
+
+</a>
+<!-- END recent_changes_button -->
+</li>
+<li><!-- BEGIN user_preferences_button -->
+<a href="index.cgi?action=user_preferences" accesskey="u" title="User Preferences">
+<!-- BEGIN user_preferences_button_icon -->
+Preferences
+<!-- END user_preferences_button_icon -->
+
+</a>
+<!-- END user_preferences_button -->
+</li>
+<li><!-- BEGIN new_page_button -->
+<a href="index.cgi?action=new_page" accesskey="N" title="Create New Page">
+<!-- BEGIN new_page_button_icon -->
+New
+<!-- END new_page_button_icon -->
+
+</a>
+<!-- END new_page_button -->
+</li>
+<li><!-- BEGIN edit_button -->
+
+
+<a href="index.cgi?action=edit;page_name=RegistroDeWindows" accesskey="e" title="Edit This Page">
+ Edit 
+
+</a>
+
+<!-- END edit_button -->
+</li>
+<li><!-- BEGIN revisions_button -->
+
+
+<a href="index.cgi?action=revisions&page_name=RegistroDeWindows&revision_id=-1" accesskey="r" title="2 Revisions">
+<!-- BEGIN revisions_button_icon -->
+Revisions
+<!-- END revisions_button_icon -->
+
+</a>
+
+<!-- END revisions_button -->
+</li>
+<li><!-- BEGIN help_button -->
+<a href="index.cgi?Help" accesskey="h" title="Help">
+<!-- BEGIN help_button_icon -->
+Helpbutton
+<!-- END help_button_icon -->
+
+</a>
+<!-- END help_button -->
+</li>
+<li><!-- BEGIN changelog_button -->
+<a href="index.cgi?action=changelog&page_name=RegistroDeWindows"
+accesskey="l" title="Changelog">
+<!-- BEGIN changelog_button_icon -->
+Changelog
+<!-- END changelog_button_icon -->
+
+</a>
+<!-- END changelog_button -->
+</li>
+</ul>
+</div>
+<!-- END toolbar_pane -->
+
+
+
+<!-- BEGIN user_name_title -->
+<div id="user_name_title">
+<em>(You are 
+<a href="index.cgi?action=user_preferences">AnonymousGnome</a>)
+</em>
+</div>
+<!-- END user_name_title -->
+
+
+
+<div id="status_pane">
+<!-- BEGIN status_pane -->
+<div class="status">
+
+</div>
+<!-- END status_pane -->
+
+</div>
+
+<div id="content_pane">
+<!-- BEGIN display_content -->
+<div class="wiki">
+<p>
+El módulo <a href="http://search.cpan.org/dist/Win32-TieRegistry/">Win32::TieRegistry</a> da acceso sencillo al Registro de Windows. 
+
+</p>
+<p>
+Este Registro se suele representar como una estructura arbórea; aquí es modelado como una estructura de hashes de hashes fijos, cuya composición no puede saltarse determinadas reglas. Así el hash inicial contiene 7 hashes, de nombre conocido: 
+
+</p>
+<ul>
+<li><tt>Classes</tt> representa la sección del Registro <tt>HKEY_CLASSES_ROOT</tt></li>
+<li><tt>CUser</tt> la sección <tt>HKEY_CURRENT_USER</tt></li>
+<li><tt>LMachine</tt> la sección <tt>HKEY_LOCAL_MACHINE</tt></li>
+<li><tt>Users</tt>  la sección <tt>HKEY_USERS</tt></li>
+<li><tt>PerfData</tt>  la sección  <tt>HKEY_PERFORMANCE_DATA</tt></li>
+<li><tt>CConfig</tt>  la sección <tt>HKEY_CURRENT_CONFIG</tt></li>
+<li><tt>DynData</tt>  la sección <tt>HKEY_DYN_DATA</tt></li>
+</ul>
+
+<p>
+El módulo <tt>Win32::TieRegistry</tt> puede utilizarse como una clase de objetos o como una referencia a un hash.
+
+</p>
+<p>
+En esta última orientación, al declarar el módulo, con la instrucción use, se crea una referencia a un hash, de nombre <tt>$Registry</tt>, a través de la cual podremos utilizar el contenido del Registro. En este momento podemos enviarle algunos parámetros que modifiquen su comportamiento. 
+
+</p>
+<p>
+El más habitual es el parámetro <tt>Delimiter</tt>, que permite especificar el carácter utilizado para indicar el camino de las sucesivas subclaves. Por ejemplo este ejemplo utilizará la barra normal:  
+
+</p>
+<pre class="formatter_pre">use Win32::TieRegistry&#40; Delimiter=&gt;&#34;/&#34;&#41;;
+</pre>
+<p>
+El punto de partida desde el que operaremos constituye la clave del hash referenciado por $Registry. Obviamente, se necesita una información previa para saber qué estamos tratando; el registro de Windows es una base de datos que no se caracteriza por su transparencia, y no todo está documentado. Por ejemplo, <tt>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print\Printers</tt> contiene la información de las impresoras de Windows XP:
+
+</p>
+<pre class="formatter_pre">my $reghash= $Registry-&gt;{&#34;LMachine/SOFTWARE/Microsoft/Windows NT/CurrentVersion/Print/Printers&#34;};
+</pre>
+<p>
+En este caso ya sabemos que no obtendremos un valor atómico, sino un hash con esta preciada información. Las claves del hash son los nombres de las impresoras, así que obtener una lista de las existentes precisa tan sólo iterar entre los componentes del hash:
+
+</p>
+<pre class="formatter_pre">foreach $subKey &#40;  $reghash-&gt;SubKeyNames  &#41; {
+  print $subKey;
+}
+</pre>
+<p>
+Aún habría algún detalle adicional que tratar, como el hecho de que, en impresoras situadas en servidores externos, las barras inversas que delimitan el recurso se guardan aquí representadas por comas, por lo que puede que las cadenas obtenidas no sean exactamente las mismas que se ven bajo los iconos de las impresoras en Windows, pero el código ya es utilizable, aunque exige conocimiento del terreno que se pisa.
+
+</p>
+<p>
+Escribir un valor en el registro es tarea trivial, no tanto como saber qué queremos colocar y dónde:
+
+</p>
+<pre class="formatter_pre">$Registry-&gt;{&#34;LMachine/Network/Novell/System Config/NetWare DOS Requester/Name Context/0&#34;} = &#34;MICENTRO.MIZONA.MIORGANIZACION&#34;;
+</pre>
+</div>
+<!-- BEGIN display_changed_by -->
+
+<!-- END display_changed_by -->
+
+<!-- END display_content -->
+
+</div>
+
+<div id="widgets_pane">
+<!-- BEGIN widgets_pane -->
+<div class="widgets">
+
+</div>
+<!-- END widgets_pane -->
+
+</div>
+
+<!-- BEGIN kwiki_end -->
+</body>
+
+<!-- SOME LINK HREF'S ON THIS PAGE HAVE BEEN REWRITTEN BY THE WAYBACK MACHINE
+OF THE INTERNET ARCHIVE IN ORDER TO PRESERVE THE TEMPORAL INTEGRITY OF THE SESSION. -->
+
+
+<SCRIPT language="Javascript">
+<!--
+
+// FILE ARCHIVED ON 20060924093345 AND RETRIEVED FROM THE
+// INTERNET ARCHIVE ON 20080522105004.
+// JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+// ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+// SECTION 108(a)(3)).
+
+   var sWayBackCGI = "http://web.archive.org/web/20060924093345/";
+
+   function xResolveUrl(url) {
+      var image = new Image();
+      image.src = url;
+      return image.src;
+   }
+   function xLateUrl(aCollection, sProp) {
+      var i = 0;
+      for(i = 0; i < aCollection.length; i++) {
+         if (typeof(aCollection[i][sProp]) == "string") { 
+          if (aCollection[i][sProp].indexOf("mailto:") == -1 &&
+             aCollection[i][sProp].indexOf("javascript:") == -1) {
+            if(aCollection[i][sProp].indexOf("http") == 0) {
+                aCollection[i][sProp] = sWayBackCGI + aCollection[i][sProp];
+            } else {
+                aCollection[i][sProp] = sWayBackCGI + xResolveUrl(aCollection[i][sProp]);
+            }
+         }
+         }
+      }
+   }
+
+   xLateUrl(document.getElementsByTagName("IMG"),"src");
+   xLateUrl(document.getElementsByTagName("A"),"href");
+   xLateUrl(document.getElementsByTagName("AREA"),"href");
+   xLateUrl(document.getElementsByTagName("OBJECT"),"codebase");
+   xLateUrl(document.getElementsByTagName("OBJECT"),"data");
+   xLateUrl(document.getElementsByTagName("APPLET"),"codebase");
+   xLateUrl(document.getElementsByTagName("APPLET"),"archive");
+   xLateUrl(document.getElementsByTagName("EMBED"),"src");
+   xLateUrl(document.getElementsByTagName("BODY"),"background");
+   var forms = document.getElementsByTagName("FORM");
+   if (forms) {
+       var j = 0;
+       for (j = 0; j < forms.length; j++) {
+              f = forms[j];
+              if (typeof(f.action)  == "string") {
+                 if(typeof(f.method)  == "string") {
+                     if(typeof(f.method) != "post") {
+                        f.action = sWayBackCGI + f.action;
+                     }
+                  }
+              }
+        }
+    }
+
+
+//-->
+</SCRIPT>
+
+</html>
