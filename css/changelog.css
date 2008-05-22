@@ -1,0 +1,17 @@
+div.version_number {
+        display: inline;
+        padding-right: 8px;
+        font-weight : bold;
+}
+div.date {
+        display: inline;
+        padding-left: 8px;
+        padding-right: 8px;
+        border-right: 1px dotted #066;
+}
+div.author {
+        display: inline;
+        padding-left: 8px;
+        padding-right: 8px;
+        color: #999;
+}
