@@ -1,0 +1,541 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<BASE HREF="http://barcelona.pm.org/xml/modulos.xml">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>Módulos Perl para XML</title><meta name="generator" content="DocBook XSL Stylesheets V1.66.1"><meta name="description" content="Perl cuenta con numerosas herramientas para tratar documentos XML de manera sencilla y eficiente. Éste es un repaso al estado actual de estas herramientas, una introducción a los módulos más importantes, con ejemplos simplificados sobre su uso; Contiene también referencias a tutoriales o informaciones relevantes sobre ellos. Un primer paso para adentrarse en el mundo XML a través de Perl."></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="id2325184"></a>Módulos Perl para XML</h1></div><div><div class="author"><h3 class="author"><span class="firstname">Carlos</span> <span class="surname">Escribano</span></h3></div></div><div></div><div></div></div><hr></div><div class="toc"><dl><dt><span class="section"><a href="#id2342715">Introducción</a></span></dt><dt><span class="section"><a href="#id2342809">Siguiendo los estándares</a></span></dt><dd><dl><dt><span class="section"><a href="#id2342829">DOM y XPath</a></span></dt><dt><span class="section"><a href="#id2418800">XSLT</a></span></dt></dl></dd><dt><span class="section"><a href="#id2419057">Transformaciones no estándares</a></span></dt><dd><dl><dt><span class="section"><a href="#id2419073">Funciones en LibXSLT</a></span></dt><dt><span class="section"><a href="#id2419154">Librerías de etiquetas</a></span></dt><dt><span class="section"><a href="#id2419432">XPathScript</a></span></dt></dl></dd><dt><span class="section"><a href="#id2326897">Generación de documentos XML</a></span></dt><dt><span class="section"><a href="#id2327190">SAX</a></span></dt><dd><dl><dt><span class="section"><a href="#id2327447">Factorías, filtros y tuberías</a></span></dt><dt><span class="section"><a href="#id2327765">Procesadores</a></span></dt><dt><span class="section"><a href="#id2382494">Generadores</a></span></dt><dt><span class="section"><a href="#id2382797">Filtros</a></span></dt><dt><span class="section"><a href="#id2382968">Manejadores</a></span></dt></dl></dd><dt><span class="section"><a href="#id2383196">Alternativas a DOM y SAX</a></span></dt><dd><dl><dt><span class="section"><a href="#id2383251">PYX</a></span></dt><dt><span class="section"><a href="#id2383388">Grove</a></span></dt><dt><span class="section"><a href="#id2383467">XML::Filter::Dispatcher</a></span></dt><dt><span class="section"><a href="#id2383595">XML::Twig</a></span></dt></dl></dd><dt><span class="section"><a href="#id2383700">Definiciones de documentos</a></span></dt><dd><dl><dt><span class="section"><a href="#id2383707">DTD</a></span></dt><dt><span class="section"><a href="#id2384165">XML Schema</a></span></dt><dt><span class="section"><a href="#id2384274">Conversiones</a></span></dt></dl></dd><dt><span class="section"><a href="#id2384328">Validación</a></span></dt><dd><dl><dt><span class="section"><a href="#id2384390">DTD</a></span></dt><dt><span class="section"><a href="#id2384553">XML Schema</a></span></dt><dt><span class="section"><a href="#id2384685">Schematron</a></span></dt></dl></dd><dt><span class="section"><a href="#id2384778">Colofón</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2342715"></a>Introducción</h3></div></div></div><p>Vamos a dar un repaso a los módulos disponibles en <a href="http://www.cpan.org" target="_top">CPAN</a> para tratar XML. La biblioteca CPAN está continuamente actualizándose, así que muchas de las impresiones obtenidas sólo servirán durante un breve período de tiempo y enseguida quedarán obsoletas. Éste es un primer contacto, en absoluto una descripción de los módulos y sus posibilidades, pero puede servir como punto de partida para empezar a buscar cuando necesitamos XML mediante Perl.</p><p>El <a href="http://www.cpan.org/modules/02packages.details.txt.gz" target="_top">índice</a> de CPAN en fecha 12-12-2004 nos ofrece algo más de 7500 módulos censados. Los relacionados con XML son bastantes; tan sólo un rastreo superficial en el el índice en busca de la cadena XML en el nombre del módulo nos ofrece 257 ocurrencias (entre los módulos principales, 1065 si contamos todos). La lista no es exhaustiva, porque un repaso así no se percata de varios proyectos importantes basados en XML, como, por ejemplo, los 38 módulos agrupados en torno a Axkit.</p><p>Si nuestra curiosidad se extendiera por los lenguajes de la familia sgml/xml la lista sería evidentemente aún mayor. El nombre del de más éxito, HTML, aparece en 221 módulos de CPAN, el de RSS en 26 y SVG en 13. Hay bastantes lenguajes XML que cuentan con algún módulo dedicado, como SMIL, XUL, XTM, MIDI XML, XMLTV, XMLRPC, WSDL, StateML, ebXML, DocBook, TEI, NewsML, AxPoint y VoiceXML.</p><p>Estamos pues ante uno de los temas relevantes de CPAN, por lo que el repaso puede ser una tarea larga. Mejor no adentrarnos en la telaraña de CPAN, y limitarnos a las herramientas que sirven para tratar XML en general, no las tecnologías que lo utilizan, por ejemplo en servicios web, o sus lenguages específicos. O sea que dejaremos para otra ocasión Mkdoc o AxKit, HTML o DocBook, y nos centraremos tan sólo en XML.</p><p>Y por descontado que no  podemos repasarlos todos, aunque sí, aunque sea brevemente, los módulos más importantes.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2342809"></a>Siguiendo los estándares</h3></div></div></div><p>Los estándares XML preveen el tratamiento de los documentos mediante un procesado que sistematiza la información que contiene, y, si fuera necesario, un ulterior procesado que provoca una transformación en otra salida estructurada. La información puede ser utilizada mediante el modelo DOM (con la ayuda opcional del lenguaje XPath), y transformada mediante el lenguaje XSLT.</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2342829"></a>DOM y XPath</h4></div></div></div><p><a href="http://www.w3.org/DOM/" target="_top">DOM</a> modela los documentos XML en términos de objetos persistentes; Para DOM cada documento XML es un objeto con una estructura jerárquica, contenedor de otros objetos, dispuestos en forma de árbol, que pueden ser a su vez nuevos contenedores de objetos. Cada uno de esos objetos contiene propiedades (nombre, atributos, nodos hijo, ...), y nos provee de métodos para leerlas o modificarlas. El objeto que incluye todo el documento se llama DocumentElement, y cada uno de los componentes del árbol se llama Node. Cada uno de estos nodos a su vez es un objeto (ej. los objetos Element, contenedores de otros nodos, o Text, que contienen texto). Como objetos, disponemos de acceso tanto a los métodos de la clase genérica (ej. Node) como a los de las clases que se se derivan de ella (ej. Element, Text). DOM provee también del concepto de colecciones de nodos.</p><p>Los procesadores DOM leen todo el documento y crean en memoria una estructura Perl que modela el contenido, proveyéndonos de métodos mediante los que podemos interactuar con esta estructura. DOM ha tenido tres especificaciones y es difícil encontrar módulos que provean alguna de las últimas funcionalidades, por lo que debemos evaluar con cuidado hasta dónde llegan nuestras necesidades antes de elegir uno.</p><p>Veamos con un ejemplo el funcionamiento. Utilizaremos un documento sencillo, sidebar.xml, de un tipo que sirve en la web de <a href="http://axkit.org/" target="_top">AxKit</a> para describir la barra lateral:</p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!DOCTYPE sidebar SYSTEM "sidebar.dtd"&gt;
+&lt;sidebar&gt;&lt;section&gt;
+   &lt;title&gt;Mi web&lt;/title&gt;
+        &lt;item&gt;
+                &lt;title&gt;Informacion&lt;/title&gt;
+                &lt;url&gt;/Informacion/&lt;/url&gt;
+        &lt;/item&gt;
+   &lt;/section&gt;&lt;/sidebar&gt;</pre><p>El módulo <a href="http://search.cpan.org/perldoc?XML%3A%3ADOM" target="_top">XML::DOM</a> nos provee acceso al árbol DOM. En este ejemplo veremos la estructura del nodo raíz:</p><pre class="programlisting">#!/usr/bin/perl -w
+
+use XML::DOM;
+my $parser = XML::DOM::Parser-&gt;new;
+my $tree = $parser-&gt;parsefile('sidebar.xml');
+my $node=$tree-&gt;getDocumentElement();
+
+print $node-&gt;getNodeName . ": " . $node-&gt;getNodeType . "\n";
+foreach my $child ($node-&gt;getChildNodes()) {
+	print "\t" . $child-&gt;getNodeName . ":" . $child-&gt;getNodeType . "\n";
+}</pre><p>El método parsefile de <a href="http://search.cpan.org/perldoc?XML%3A%3ADOM%3A%3AParser" target="_top">XML::DOM::Parser</a> nos devuelve un objeto de la clase Document, o sea crea el árbol del documento. Una invocación al método getDocumentElement nos devuelve un objeto DocumentElement, objeto contenedor que representa al nodo raíz, en nuestro ejemplo el nodo sidebar, puesto que se trata de un documento del tipo sidebar. Los métodos getNodeName y getNodeType nos devuelven la información del nombre del nodo y su tipo. El método getChildNodes nos devuelve un objeto NodeList, que es un un arreglo de los objetos Node hijos del nodo. Una interrogación posterior a cada elemento nos devolverá también el nombre y el tipo:</p><pre class="programlisting">sidebar: 1
+        section:1</pre><p>El nodo raíz sólo tiene un nodo hijo. El tipo 1 (NODE_ELEMENT) corresponde a un nodo Element, o contenedor de otros nodos. La propiedad NodeName en los nodos Element es el nombre del elemento xml, o etiqueta, en este caso sidebar y section. </p><p>El tutorial de F. Javier García Castellano <a href="http://flanagan.ugr.es/xml/parser.htm" target="_top">Parsers XML</a> nos muestra más ejemplos de uso de DOM en Perl.</p><p>DOM siempre utiliza el punto de vista de un nodo, y, como vemos, se mueve despacio dentro de él, puesto que provee acceso a sus componentes en un sistema simple: El conjunto de sus nodos hijo, el primero de ellos, el siguiente, el anterior, el último, el conjunto de sus nodos que están dentro de él y tienen un determinado nombre. Como el problema es llegar al nodo que deseamos, se articuló un lenguaje aparte, <a href="http://www.w3.org/TR/xpath" target="_top">XPath</a>, para proveer de un sistema de búsqueda de nodos. Pero hasta DOM3 XPath no ha estado integrado dentro del estándard DOM, por lo que una implementación estricta de las versiones anteriores puede no soportar XPath.</p><p>XPath describe la posición del nodo en términos de un sistema de ficheros. Llegar a un nodo es indicar una ruta, y para especificarla es posible utilizar algunos comodines. El módulo <a href="http://search.cpan.org/perldoc?XML%3A%3AXPath" target="_top">XML::XPath</a> nos provee de XPath1:</p><pre class="programlisting">#!/usr/bin/perl -w
+use XML::XPath;
+
+my $xp = XML::XPath-&gt;new( filename =&gt; 'sidebar.xml' );
+my $nodeset = $xp-&gt;find('//section/title');
+
+foreach my $node ($nodeset-&gt;get_nodelist) {
+                print XML::XPath::XMLParser::as_string($node), "\n";
+        }</pre><p>Éste es quizá el ejemplo más simple del uso del módulo <a href="http://search.cpan.org/perldoc?XML%3A%3AXPath" target="_top">XML::XPath</a>. Con el método new procesamos el documento externo, es decir, creamos las estructuras Perl que lo modelan, y con el método find recuperamos una lista de nodos que cumplen una condición; en ese caso comenzamos la búsqueda en cualquier posición (la doble barra inicial indica eso), y el nombre del nodo es title:</p><pre class="programlisting">&lt;title&gt;Mi web&lt;/title&gt;</pre><p>El veterano <a href="http://search.cpan.org/perldoc?XML%3A%3AXDOM" target="_top">XML::DOM</a> se limita a DOM1, por lo que, entre otras cosas, no soporta espacios de nombres ni XPath, aunque si deseamos esta última posibilidad, <a href="http://search.cpan.org/perldoc?XML%3A%3ADOM%3A%3AXPath" target="_top">XML::DOM::XPath</a> la añade como extensión del módulo. Pero para un uso real de DOM seguramente nos decantaremos por otros procesadores DOM que al menos soporten espacios de nombres, o sea que como mínimo cumplan con DOM2.</p><p>Desde Perl podemos acceder a tres importantes procesadores DOM que proveen XPath, todos ellos librerías C o C++, sobre las que hay construidos interfaces:</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AXGDOME" target="_top">XML::GDOME</a>, interfaz de la librería <a href="http://gdome2.cs.unibo.it/" target="_top">Gdome</a>, a su vez basada en libxml2; cumple DOM2, con las opciones de XPath de DOM3.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AXerces" target="_top">XML::Xerces</a>, el wrapper de perl sobre la librería <a href="http://xml.apache.org/xerces-c/" target="_top">Xerces C++</a>. Soporta DOM2 con algunas implementaciones de DOM3. <a href="http://software.decisionsoft.com/pathanp.html" target="_top">Pathan-P</a> implementa XPath1 sobre la librería <a href="http://software.decisionsoft.com/pathanIntro.html" target="_top">Pathan</a>,  a su vez basada en <a href="http://xml.apache.org/xerces-c/" target="_top">Xerces-C++</a>.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3ALibXML" target="_top">XML::LibXML</a>, interfaz de la popular librería <a href="http://xmlsoft.org/" target="_top">libxml2</a>, que soporta DOM2  e incluye Xpath mediante extensiones al estandard. El tutorial <a href="http://www.xml.com/pub/a/2001/11/14/xml-libxml.html" target="_top">XML::LibXML - An XML::Parser Alternative</a> de Kip Hampton  es un buen punto de partida para su uso.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2418800"></a>XSLT</h4></div></div></div><p>Si en lugar de la manipulación directa del árbol DOM se desea una transformación, es decir actuar como filtros que provocan una salida a partir de la entrada XML, el sistema estándard de lograr esto es <a href="http://www.w3.org/TR/xslt" target="_top">XSLT</a>, un lenguaje de transformaciones mediante la aplicación de conjuntos de reglas que se mueven en el árbol con la ayuda de XPath, llamados <tt class="literal">hojas de estilo</tt>.</p><p>Este minimalística hoja de estilo XSLT, sidebar.xsl, extraerá de los documentos de tipo sidebar una relación en texto plano de las secciones y sus títulos. No comentaremos la sintaxis de XSLT, que queda fuera del tema de esta introducción:</p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:sb="http://axkit.org/NS/sidebar-1.0" &gt;
+
+	&lt;xsl:output method="text"/&gt;
+
+	&lt;xsl:template match="/"&gt;
+		&lt;xsl:for-each select="sidebar/section"&gt;
+			&lt;xsl:text&gt;Section: &lt;/xsl:text&gt;
+			&lt;xsl:value-of select="title"/&gt;
+		&lt;/xsl:for-each&gt;
+	&lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</pre><p>Hay varias utilidades que nos permiten generar la transformación directamente desde la línea de comandos, como ésta <a href="http://xmlsoft.org/XSLT/xsltproc2.html" target="_top">xsltroc</a>, de <a href="http://xmlsoft.org/XSLT/" target="_top">libxslt</a>:</p><pre class="programlisting">xsltproc sidebar.xsl sidebar.xml</pre><pre class="programlisting">Section: Mi web</pre><p>Perl nos provee de diversas herramientas si deseamos un control más detallado que la simple línea de comandos. En este ejemplo obtenemos con un  <a href="http://search.cpan.org/perldoc?XML%3A%3AXSLT" target="_top">XML::XSLT</a> un resultado similar:</p><pre class="programlisting">#!/usr/bin/perl -w
+use XML::XSLT;
+
+my $xslt = XML::XSLT-&gt;new ("sidebar.xsl");
+
+$xslt-&gt;transform ("sidebar.xml");
+print $xslt-&gt;toString;</pre><p><a href="http://search.cpan.org/perldoc?XML%3A%3AXSLT" target="_top">XML::XSLT</a> obtiene los árboles DOM, tanto el del documento XML como el de la hoja de estilos, de  <a href="http://search.cpan.org/perldoc?XML%3A%3ADOM%3A%3AParser" target="_top">XML::DOM::Parser</a>, y por tanto la entrada puede personalizarse pasándole los argumentos adecuados a este módulo. También es posible pasar argumentos (variables) a la hoja de estilos, mediante el método process. El tutorial <a href="http://www.tldp.org/linuxfocus/Castellano/July2000/article156.shtml" target="_top">Introducción al módulo XML::XSLT para perl</a> es un buen punto de partida para utilizarlo.</p><p>El veterano <a href="http://search.cpan.org/perldoc?XML%3A%3AXSLT" target="_top">XML::XSLT</a> no es el único procesador de XSLT existente en Perl. Al contrario, contamos otros más eficientes y potentes. Los más importantes son:</p><div class="itemizedlist"><ul type="disc"><li><p><a href="http://search.cpan.org/perldoc?XML%3A%3ALibXSLT" target="_top">XML::LibXSLT</a>, interfaz de <a href="http://xmlsoft.org/XSLT/" target="_top">libxslt</a>, que utiliza  <a href="http://search.cpan.org/perldoc?XML%3A%3ALibXML" target="_top">XML::LibXML</a> para el procesado de los árboles DOM. Potente y rápida, soporta numerosas extensiones al estándard.</p></li><li><p><a href="http://search.cpan.org/perldoc?XML%3A%3AGDOME%3A%3AXSLT" target="_top">XML::GDOME::XSLT</a> es un interfaz de  la librería xslt de <a href="www.levien.com/gnome/gdome.html" target="_top">gdome</a>, a su vez basada en <a href="http://xmlsoft.org/XSLT/" target="_top">libxslt</a>.</p></li><li><p><a href="http://search.cpan.org/perldoc?XML%3A%3ASablotron" target="_top">XML::Sablotron</a>, interfaz al procesador XSLT <a href="www.gingerall.com/charlie/ga/xml/p_sab.xml" target="_top">Sablotron</a>.</p></li><li><p><a href="http://search.cpan.org/perldoc?XML%3A%3AXalan" target="_top">XML::Xalan</a>, interfaz de la librería C++ de <a href="xml.apache.org/xalan-c/" target="_top">Xalan</a>.</p></li></ul></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2419057"></a>Transformaciones no estándares</h3></div></div></div><p>Hay en Perl varias alternativas al estándard XSLT para transformar documentos. Las más importantes son las extensiones de funciones en LibXSLT, las librerías de etiquetas y XPathScript.</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2419073"></a>Funciones en LibXSLT</h4></div></div></div><p><a href="http://search.cpan.org/perldoc?XML%3A%3ALibXSLT" target="_top">XML::LibXSLT</a> provee de una extensión, el método register_function, para injectar funciones de Perl en las hojas de estilo XSLT. En este ejemplo incluiremos la fecha y hora del sistema en nuestro proceso de la barra lateral. El método requiere como parámetros la definición de un espacio de nombres para la función o funciones(aquí sera <tt class="literal">urn:funciones</tt>, el nombre local del elemento XML que  invocará a la función (timestamp), y una referencia a la función (hora).</p><pre class="programlisting">#!/usr/bin/perl -w
+
+use XML::LibXML;
+use XML::LibXSLT;
+
+XML::LibXSLT-&gt;register_function("urn:funciones", "timestamp", \&amp;hora);
+
+my $parser = XML::LibXML-&gt;new();
+my $xslt = XML::LibXSLT-&gt;new();
+my $stylesheet = $xslt-&gt;parse_stylesheet_file("sidebar2.xsl");
+my $source_doc = $parser-&gt;parse_file("sidebar.xml");
+my $result = $stylesheet-&gt;transform($source_doc);
+print $stylesheet-&gt;output_string($result);
+
+sub hora {
+	return scalar localtime
+}</pre><p>La rutina de nuestro ejemplo se limita a retornar el valor de la función interna localtime, pero las posibilidades están abiertas a todo CPAN, como es obvio. La hoja de estilos ligeramente modificada para incluir este nuevo elemento y su espacio de nombres queda así:</p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:sb="http://axkit.org/NS/sidebar-1.0"
+  xmlns:funciones="urn:funciones" &gt;
+
+	&lt;xsl:output method="text"/&gt;
+
+	&lt;xsl:template match="/"&gt;
+		&lt;xsl:text&gt;Mis secciones hoy &lt;/xsl:text&gt;
+		&lt;xsl:value-of select="funciones:timestamp()"/&gt;
+		&lt;xsl:text&gt;:&amp;#xa;&lt;/xsl:text&gt;
+		&lt;xsl:for-each select="sidebar/section"&gt;
+			&lt;xsl:value-of select="title"/&gt;
+		&lt;/xsl:for-each&gt;
+	&lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+</pre><p>y el resultado:</p><pre class="programlisting">Mis secciones hoy Fri Jan 28 10:51:05 2005:
+Mi web</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2419154"></a>Librerías de etiquetas</h4></div></div></div><p>El siguiente paso es agrupar unas cuantas funciones en un módulo externo, que se reserva el espacio de nombres común a todas ellas. Estos módulos se conocen como librerías de etiquetas (taglibs). En Perl sólo es capaz de utilizarlas el procesador <a href="http://search.cpan.org/perldoc?Apache%3A%3AAxKit%3A%3ALanguage%3A%3AXSP" target="_top">Apache::AxKit::Language::XSP</a>, integrado en <a href="www.axkit.org" target="_top">AxKit</a>, y puesto que AxKit es a su vez un módulo de <a href="www.apache.org" target="_top">Apache</a>, sólo pueden usarse en entornos web.</p><p>Para hacerlo basta con registrar el espacio de nombres y su módulo asociado mediante directivas del archivo de configuración de Apache:
+</p><pre class="programlisting">AxAddXSPTaglib My::TagLibPersonalizado</pre><p>Ese procesador de AxKit, en compatibilidad con <a href="http://cocoon.apache.org/" target="_top">Cocoon</a>, provee de una clase genérica de librerías de etiquetas por defecto que permiten inyectar código de Perl, a la que se han añadido unas cuantas extensiones para tareas habituales, algunas también compatibles con las equivalentes de Cocoon: <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3AWebUtils" target="_top">AxKit::XSP::WebUtils</a>, para diversas tareas del entorno web,  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3APerForm" target="_top">AxKit::XSP::PerForm</a>, para formularios de datos,  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3AAuth" target="_top">AxKit::XSP::Auth</a> para gestión de accesos,  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3ABasicSession" target="_top">AxKit::XSP::BasicSession</a>,  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3ASession" target="_top">AxKit::XSP::Session</a> y  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3AMinisession" target="_top">AxKit::XSP::Minisession</a> para gestión de sesiones web,  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3ACookie" target="_top">AxKit::XSP::Cookie</a> para cookies,  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3ACharsetConv" target="_top">AxKit::XSP::CharsetConv</a> para conversión de caracteres entre códigos,  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3AQueryParam" target="_top">AxKit::XSP::QueryParam</a>, para utilización de las funciones de Apache request,   <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3AException" target="_top">AxKit::XSP::Exception</a>, para gestión de exceptciones,  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3ASendmail" target="_top">AxKit::XSP::Sendmail</a>, para incluir funciones de correo,  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3AMD" target="_top">AxKit::XSP::MD</a>5, para incluir funciones de resúmenes MD5,  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3AESQL" target="_top">AxKit::XSP::ESQL</a> para proveer de consultas SQL,  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3ALDAP" target="_top">AxKit::XSP::LDAP</a>, para acceso a datos de directorio LDAP. También hay algunas para tareas más concretas, como   <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3AHandel%3A%3ACart" target="_top">AxKit::XSP::Handel::Cart</a> para mantener cartas de precios,  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3ABlog" target="_top">AxKit::XSP::Blog</a> para mantener bases de datos de Blogs, y  <a href="http://search.cpan.org/perldoc?AxKit%3A%3AXSP%3A%3AWiki" target="_top">AxKit::XSP::Wiki</a>, para levantar un wiki.</p><p>Existen cuatro esqueletos para contruir nuestras propias librerías de etiquetas,  <a href="http://search.cpan.org/perldoc?Apache%3A%3AAxKit%3A%3AXSP%3A%3ALanguage%3A%3ASimpleTaglib" target="_top">Apache::AxKit::XSP::Language::SimpleTaglib</a>,  <a href="http://search.cpan.org/perldoc?Apache%3A%3AAxKit%3A%3ALanguage%3A%3AXSP%3A%3ATaglibHelper" target="_top">Apache::AxKit::Language::XSP::TaglibHelper</a>,  <a href="http://search.cpan.org/perldoc?GCT%3A%3AXSP%3A%3AActionTaglib" target="_top">GCT::XSP::ActionTaglib</a>, y  <a href="http://search.cpan.org/perldoc?Apache%3A%3AAxKit%3A%3ALanguage%3A%3AXSP%3A%3AObjectTaglib" target="_top">Apache::AxKit::Language::XSP::ObjectTaglib</a>, con diversas diferencias en el enfoque. Dos estupendos tutoriales de Barrie Slaymaker, <a href="http://www.perl.com/pub/a/2002/04/16/axkit.html" target="_top">XSP, Taglibs and Pipelines</a> y <a href="http://www.perl.com/lpt/a/2002/07/02/axkit.html" target="_top">Taglib TMTOWTDI</a> nos guirán en el proceso si utilizamos cualquiera de los dos primeros métodos.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2419432"></a>XPathScript</h4></div></div></div><p>XPathscript es un lenguaje para transformaciones de documentos XML, que no utiliza DOM para procesar el documento XML, sino un subconjunto de XPath, lo que le hace potente y rápido. Las <tt class="literal">hojas de estilo</tt> XpathScript son plantillas del documento final que incluyen intercaladas instrucciones de procesamiento con funciones de XPathScript, aunque el procesador también soporta insertar código Perl normal. Aunque su uso habitual será con el procesador <a href="http://search.cpan.org/perldoc?Apache%3A%3AAxKit%3A%3ALanguage%3A%3AXPathScript" target="_top">Apache::AxKit::Language::XPathScript</a>, de AxKit, también puede utilizarse fuera de este entorno, con <a href="http://search.cpan.org/perldoc?XML%3A%3AXPathScript" target="_top">XML::XPathScript</a>.</p><p>En este ejemplo creamos un raquítico documento html con el título de la primera seccción de nuestro documento habitual, sidebar.xml:</p><pre class="programlisting">#!/usr/bin/perl -w
+
+use XML::XPathScript;
+
+open(IN, "sidebar.xml");
+my $xml = join '', &lt;IN&gt;;
+close(IN);
+
+my $stylesheet = q|
+&lt;html&gt;&lt;body&gt;&lt;p&gt;
+&lt;%= findvalue("/sidebar/section/title/text()") %&gt;
+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+|;
+
+my $xps = XML::XPathScript-&gt;new(xml =&gt; $xml, stylesheet =&gt; $stylesheet);
+$xps-&gt;process;</pre><p>El módulo exige que la hoja de estilos y el archivo de entrada le sean entregados mediante un escalar, por lo que hemos debido importar nuestro archivo antes. La hoja la hemos incluido tal cual:</p><pre class="programlisting">&lt;html&gt;&lt;body&gt;&lt;p&gt;
+Mi web
+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</pre><p>La guía de Matt Sergeant <a href="http://www.axkit.org/wiki/view/AxKit/XPathScriptGuide#" target="_top">XPathScript - A Viable Alternative to XSLT?</a> es el punto de partida obligado para conocer este lenguaje.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2326897"></a>Generación de documentos XML</h3></div></div></div><p>Las transformaciones suelen conllevar la conversión de un documento XML de un tipo en otro. Esa es la tarea principal de XSLT. Si lo que deseamos es generar un documento XML como parte del tratamiento de uno ya existente, los procesadores importantes de Perl proveen todos de métodos para salida XML; algunos de ellos van apareciendo en el código de los ejemplos de este trabajo.</p><p>En muchas ocasiones sin embargo es necesario crear documentos XML completamente nuevos; un uso típico es la utilización en nuestro programa de una fuente no XML que deseamos convertir a este formato.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AWriter" target="_top">XML::Writer</a> es el más popular de los módulos de generación de documentos XML. Su sencilla API nos permite ir creando elementos entendidos como etiquetas de inicio y fin y bloques de caracteres, en la forma más simple de describir cómo se construye el texto:</p><pre class="programlisting">#!/usr/bin/perl -w
+use XML::Writer;
+
+my $writer = XML::Writer-&gt;new();
+$writer-&gt;xmlDecl('ISO-8859-1');
+$writer-&gt;doctype('sidebar','' ,'sidebar.dtd');
+$writer-&gt;startTag('sidebar');
+$writer-&gt;startTag('title',
+	"tipo" =&gt; "simple");
+$writer-&gt;characters('Mi web');
+$writer-&gt;endTag('title');
+$writer-&gt;endTag('sidebar');
+$writer-&gt;end();</pre><p>Con lo que obtendremos un particular (y no válido) texto XML del tipo sidebar:</p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!DOCTYPE sidebar SYSTEM "sidebar.dtd"&gt;
+&lt;sidebar&gt;&lt;title tipo="simple"&gt;Mi seccion&lt;/title&gt;&lt;/sidebar&gt;</pre><p>Si queremos otro enfoque, podemos usar <a href="http://search.cpan.org/perldoc?XML%3A%3AGenerator" target="_top">XML::Generator</a>, donde el entramado XML se construye directamente con estructuras Perl:</p><pre class="programlisting">#!/usr/bin/perl -w
+require XML::Generator;
+
+my $gen = XML::Generator-&gt;new();
+print $gen-&gt;xmldtd([ 'sidebar', 'SYSTEM', '', 'sidebar.dtd' ]);
+print $gen-&gt;sidebar($gen-&gt;title({ tipo =&gt; 'simple' }, 'Mi web'));</pre><p>Hay otros módulos que provocan salidas XML de tipos específicos. <a href="http://www.xml-edifact.org/" target="_top">XML::Edifact</a> es un módulo conversor a XML de documentos en formato UN/EDIFACT y viceversa. <a href="http://search.cpan.org/perldoc?XML%3A%3ACSV" target="_top">XML::CSV</a> convierte documentos de texto CSV en un formato XML. <a href="http://search.cpan.org/perldoc?XML%3A%3AXML_RDB" target="_top">DBIx::XML_RDB</a> obtiene un texto XML a partir de datos de la información de cualquier base de datos que pueda utilizar la interfaz DBI.</p><p>Hay también unos cuantos <a href="#manejadores_SAX">manejadores SAX</a> que crean código XML a partir de eventos SAX, y otros <a href="#generadores_SAX">generadores SAX</a>  que producen eventos de material no XML, con lo que el abanico se amplía considerablemente.</p>
+
+Véase el tutorial de Kip Hampton <a href="http://www.xml.com/pub/a/2001/07/11/creatingsvg.html" target="_top">Generating Dynamic SVG From Non-XML Data</a> para un ejemplo más extenso del uso de <a href="http://search.cpan.org/perldoc?XML%3A%3AWriter" target="_top">XML::Writer</a>. El tutorial <a href="http://www.samspublishing.com/articles/article.asp?p=30149" target="_top">Manipulating Documents: The Document Object Model (DOM)</a> nos presenta un ejemplo con <a href="http://search.cpan.org/perldoc?XML%3A%3AXerces%3A%3ADOMParse" target="_top">XML::Xerces::DOMParse</a>.
+
+</div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2327190"></a>SAX</h3></div></div></div><p>Los tratamientos de flujo aportaron desde fecha temprana otro modelo de datos de los documentos XML. Ven los documentos como series ordenadas de elementos formales simples: Una etiqueta, un atributo, una cadena de caracteres, ... De esta manera pueden tratarse una sóla vez, y puesto que cada elemento de la serie es un fragmento pequeño del documento original, el proceso requiere pocos recursos y se convierte en una herramienta rápida y eficiente. Su similitud con los componentes de las tuberías de UNIX facilita el uso de varios tratamientos sobre una sola entrada.</p><p><a href="http://www.saxproject.org/" target="_top">SAX</a> es un sistema de tratamiento de flujo de documentos XML creado desde <a href="http://www.xml.org/xml/xmldev.shtml" target="_top">xml-dev</a>. No sólo define el modelo de datos, es decir los elementos que constituirán la serie que describe el documento XML; también define cómo han de ser procesados. El API SAX en Perl está definido por el grupo <a href="http://perl-xml.sourceforge.net/perl-sax/" target="_top">Perl SAX</a>. SAX ha tenido dos implementaciones mayores, y no todos los módulos de CPAN soportan SAX2.</p><p>PerlSAX está bien documentado, y podemos acudir a la excelente descripción de Ken MacLeod <a href="http://search.cpan.org/src/KMACLEOD/libxml-perl-0.08/doc/sax-2.0.html" target="_top">Perl SAX 2.0 Binding</a>, para obtener una visión general de su uso.</p><p>El modelo de proceso está basado en eventos que se activan al producirse un cambio de elemento en la serie: inicio de elemento XML, encontrada una instrucción de procesamiento, fin de una sección CDATA, etc. Los sistemas SAX más simples constan de un procesador (parser), que es el que lleva a cabo el tratamiento propiamente dicho, generando los eventos, y un manejador (handler), que los recibe y actúa en consecuencia. Esta arquitectura básica puede tener importantes adiciones: Pueden establecerse varios procesadores; en lugar del procesador también puede utilizarse un driver o generador, que es un procesador de documentos no XML que ofrece como salida un flujo XML; por último, los manejadores pueden procesarse en tubería, por lo que se convierten en filtros. Esta arquitectura es muy flexible, y facilita la construcción de aplicaciones a medida.</p><p>El manejador <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3APrintEvents" target="_top">XML::Handler::PrintEvents</a>, creado para depuración de procesadores SAX, como su nombre indica vuelca a la salida estandard cierta información de los eventos que recibe, lo que nos permite de paso ver cómo trabaja el procesador SAX.</p><p>El procesador <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3AExpat" target="_top">XML::SAX::Expat</a> es un procesador SAX2 que se asienta sobre <a href="http://search.cpan.org/perldoc?XML%3A%3AParser" target="_top">XML::Parser</a> y hace uso de la librería C <a href="http://expat.sourceforge.net/" target="_top">Expat</a>.</p><pre class="programlisting">#!/usr/bin/perl -w
+use XML::SAX::Expat;
+use XML::Handler::PrintEvents;
+my $p = XML::SAX::Expat-&gt;new(Handler =&gt; XML::Handler::PrintEvents-&gt;new);
+$p-&gt;parse_uri("sidebar.xml");</pre><p>Esta és la manera más simple de trabajar con SAX: se crea una nueva instancia del procesador, enviándole una instancia del manejador como parámetro, y ya se pueden invocar los métodos del procesador, que admite tratar el texto XML contenido en cadenas o archivos.</p><p>Vemos que el procesador SAX, a medida que procesa el flujo de datos, va generando los eventos SAX, start_document, start_element, characters, comment, processing_instruction, end_element y end_document , y en cada caso va pasando al manejador diversa información sobre el evento. Véase en la <a href="http://perl-xml.sourceforge.net/perl-sax/sax-2.1-ref.html" target="_top">referencia de Perl SAX</a> una información detallada de qué es lo que entrega el procesador:</p><pre class="programlisting">start_document         Version =&gt; [1.0], Encoding =&gt; [ISO-8859-1], Standalone =&gt; []
+start_element          Prefix =&gt; [], LocalName =&gt; [sidebar], Attributes =&gt; [HASH(0x83ca318)], Name =&gt; [sidebar], NamespaceURI =&gt; []
+characters             Data =&gt; [
+]
+characters             Data =&gt; [   ]
+start_element          Prefix =&gt; [], LocalName =&gt; [section], Attributes =&gt; [HASH(0x83f3614)], Name =&gt; [section], NamespaceURI =&gt; []
+characters             Data =&gt; [
+]
+...</pre><p>Con cada evento, se llama a un método del manejador. El lado del manejador se limita por tanto a proveer de métodos adecuados a los eventos que se van a producir. Ésta es una versión muy simplificada de lo que conseguíamos con <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3APrintEvents" target="_top">XML::Handler::PrintEvents</a>, en este caso un manejador que simplemente imprime una indicación a medida que recibe eventos de inicio o fin de elementos. El ejemplo procede de la documentación de libxml2, <a href="http://perl-xml.sourceforge.net/libxml-perl/UsingPerlSAX.html" target="_top">Using PerlSAX</a>:</p><pre class="programlisting">package MyHandler;
+
+sub new {
+        my ($type) = @_;
+        return bless {}, $type;
+    }
+
+sub start_element {
+        my ($self, $element) = @_;
+        print "Start element: $element-&gt;{Name}\n";
+    }
+
+sub end_element {
+        my ($self, $element) = @_;
+        print "End element: $element-&gt;{Name}\n";
+    }
+
+    1;</pre><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2327447"></a>Factorías, filtros y tuberías</h4></div></div></div><p>SAX2 introduce nuevos componentes en la estructura, las factorías y los filtros. En Perl disponemos de <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX" target="_top">XML::SAX</a>, un módulo base sobre el que se pueden construir procesadores y drivers, que soporta el uso de factorías SAX.</p><p>La factoría es un método que gestiona procesadores SAX. En ocasiones es interesante utilizar varios procesadores, poque cada uno está adaptado a determinadas tareas. El módulo factoría nos entrega el procesador deseado, y hace las gestiones adecuadas para dar de alta o buscar un procesador.</p><p>El código anterior puede verse entonces así:</p><pre class="programlisting">#!/usr/bin/perl -w
+use XML::SAX::ParserFactory;
+use XML::Handler::PrintEvents;
+$XML::SAX::ParserPackage = "XML::SAX::Expat";
+my $parser = XML::SAX::ParserFactory-&gt;parser(
+        Handler =&gt; XML::Handler::PrintEvents-&gt;new
+  );
+$parser-&gt;parse_uri("sidebar.xml");</pre><p>Como vemos la factoría ha sustituido al procesador, porque de hecho nos provee de él. Si no hemos especificado ninguno se utilizará el último, o <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3APurePerl" target="_top">XML::SAX::PurePerl</a> por defecto. También podemos registrar otro procesador, y pedir una lista de los existentes, y sus características, gracias al método parsers:</p><pre class="programlisting">#!/usr/bin/perl -w
+use XML::SAX;
+
+XML::SAX-&gt;add_parser(q(XML::SAX::Expat))-&gt;save_parsers();
+my @parsers = @{XML::SAX-&gt;parsers( )};
+
+foreach my $p ( @parsers ) {
+    print "\n", $p-&gt;{ Name }, "\n";
+    foreach my $f ( sort keys %{$p-&gt;{ Features }} ) {
+        print "$f =&gt; ", $p-&gt;{ Features }-&gt;{ $f }, "\n";
+    }
+}</pre><pre class="programlisting">XML::SAX::PurePerl
+http://xml.org/sax/features/namespaces =&gt; 1
+
+XML::SAX::Expat
+http://xml.org/sax/features/external-general-entities =&gt; 1
+http://xml.org/sax/features/external-parameter-entities =&gt; 1
+http://xml.org/sax/features/namespaces =&gt; 1</pre><p>Vemos que el ambos soportan espacios de nombres, pero sólo el segundo entidades externas. Mediante la variable $XML::SAX::ParserPackage estableceremos el que deseamos utilizar, si no queremos usar el último.</p><p>La estructura SAX puede complicarse en la medida que deseemos, gracias a la aparición de los filtros. Éstos son similares a un generador, que produce eventos SAX pero no a partir de un documento externo, sino de los eventos SAX que ha recibido.</p><p>Las primeras estructuras que podemos construir con filtros son aquellas en que varios procesados SAX acaban en un manejador. Una estructura así es la utilizada por el filtro <a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3AXInclude" target="_top">XML::Filter::XInclude</a>, que provee de soporte XInclude en SAX (aunque no soporta Xpointer). Otra, la que provee el filtro <a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3AMerger" target="_top">XML::Filter::Merger</a>, que deriva a un manejador los eventos procedentes de varios flujos SAX.</p><p>Veamos ahora la posibilidad de utilizar varios manejadores. Una primera forma de abordar el problema es la de replicar los eventos a varios manejadores a la vez. Es lo que hacen  <a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3ASAXT" target="_top">XML::Filter::SAXT</a> y  <a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3ADistributor" target="_top">XML::Filter::Distributor</a>, utilizando técnicas de multiplexado diferentes. </p><p>Sin embargo el uso más habitual de los filtros son las tuberías,  donde la salida de uno de ellos sea entrada del siguiente, provocando sucesivas transformaciones.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3ASAX" target="_top">XML::SAX</a> permite montar una tubería basada en filtros. Veamos un ejemplo de su uso. Aquí nuestro archivo sidebar.xml no contiene ningún indentado:</p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;sidebar&gt;&lt;section&gt;&lt;title&gt;Mi web&lt;/title&gt;&lt;item&gt;&lt;title&gt;Informacion&lt;/title&gt;&lt;url&gt;/Informacion/&lt;/url&gt;&lt;/item&gt;&lt;/section&gt;&lt;/sidebar&gt;
+</pre><p>Pero queremos hacer una impresión con un aspecto más legible. Utilizaremos la cadena SAX pasando el texto a través de un procesador que generará eventos tras la recepción del texto, y un manejador, <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3AWriter" target="_top">XML:SAX:Writer</a>, que realizará el proceso contrario, generando texto XML a partir de los eventos recibidos. Entre ambos colocaremos un filtro que modifique los eventos del procesador y devuelva los elementos indentados,  <a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3AReindent" target="_top">XML::Filter::Reindent</a>. La tubería se arma al revés de como se va a utilizar:</p><pre class="programlisting">#!/usr/bin/perl -w
+
+use XML::SAX::ParserFactory;
+use XML::Filter::Reindent;
+use XML::SAX::Writer;
+
+my $output_string;
+my $handler1 = XML::SAX::Writer-&gt;new();
+my $handler2 = XML::Filter::Reindent-&gt;new(Handler =&gt; $handler1);
+my $parser = XML::SAX::ParserFactory-&gt;parser(Handler =&gt; $handler2);
+$parser-&gt;parse_uri("sidebar.xml");</pre><pre class="programlisting">&lt;sidebar&gt;
+ &lt;section&gt;
+  &lt;title&gt;Mi web&lt;/title&gt;
+  &lt;item&gt;
+   &lt;title&gt;Informacion&lt;/title&gt;
+   &lt;url&gt;/Informacion/&lt;/url&gt;
+  &lt;/item&gt;
+ &lt;/section&gt;
+&lt;/sidebar&gt;</pre><p>Si lo queremos más fácil, aquí está  <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3AMachines" target="_top">XML::SAX::Machines</a>, donde hay poco que hacer, aparte de definir la tubería:</p><pre class="programlisting">#!/usr/bin/perl -w
+use XML::SAX::Machines qw(Pipeline);
+my $parser = Pipeline( XML::Filter::Reindent =&gt; XML::SAX::Writer =&gt; \*STDOUT );
+$parser-&gt;parse_uri("sidebar.xml");</pre><p>Véase la estupenda documentación de <a href="http://search.cpan.org/~rbs/XML-SAX-Machines/lib/XML/SAX/Machines.pm" target="_top">XML::SAX::Machines</a> y de <a href="http://search.cpan.org/~rbs/XML-SAX-Machines/lib/XML/SAX/Pipeline.pm" target="_top">XML::SAX::Pipeline</a>, además de <a href="http://www.xml.com/pub/a/2002/02/13/sax-machines.html" target="_top">Introducing XML::SAX::Machines, Part One</a>, de Kip Hampton, un tutorial con ejemplos de las utilidades de este módulo. A partir de <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3AMachines" target="_top">XML::SAX::Machines</a> se puede construir un controlador SAX, un sistema que encapsule todas las operaciones SAX volviéndolas transparentes a una aplicación, como se explica en <a href="http://www.xml.com/pub/a/2002/03/20/machines.html" target="_top">Introducing XML::SAX::Machines, Part Two</a>.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2327765"></a>Procesadores</h4></div></div></div><p>El ya mencionado <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3AExpat" target="_top">XML::SAX::Expat</a> está disponible también con una extensión, <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3AExpatXS" target="_top">XML::SAX::ExpatXS</a>, que le añade algunas caracerísticas.</p><p>También disponemos de otros procesadores SAX. El más veterano  es <a href="http://search.cpan.org/perldoc?XML%3A%3AParser%3A%3APerlSAX" target="_top">XML::Parser::PerlSAX</a>, también basado en <a href="http://search.cpan.org/perldoc?XML%3A%3AParser" target="_top">XML::Parser</a>. Con él <a href="http://search.cpan.org/perldoc?XML%3A%3AESISParser" target="_top">XML::ESISParser</a> un procesador capaz también de utilizar archivos SGML.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3ALibXML%3A%3ASAX" target="_top">XML::LibXML::SAX</a> nos provee de un interfaz de los métodos SAX de <a href="http://xmlsoft.org/" target="_top">libxml2</a>, que son limitados.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3APurePerl" target="_top">XML::SAX::PurePerl</a>, es un procesador que, como su nombre indica, está construido enteramente en Perl y por tanto es más lento que los que operan sobre librerías C, aunque más portable.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AXerces%3A%3ASAXParser" target="_top">XML::Xerces::SAXParser</a>, interfaz de las funciones SAX de <a href="http://xml.apache.org/xerces-c/" target="_top">Xerces C++</a>.</p><p>Si deseamos implementar la factoría de procesadores, podemos acudir a <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX" target="_top">XML::SAX</a> o a <a href="http://search.cpan.org/perldoc?XML%3A%3AXerces" target="_top">XML::Xerces</a>.</p><p>En ocasiones puede ser de interés construir un sencillo procesador para necesidades concretas. En la <a href="http://search.cpan.org/dist/XML-SAX/SAX.pm" target="_top">documentación de XML::SAX</a> puede verse un pequeño tutorial al respecto</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2382494"></a>Generadores</h4></div></div></div><p>Los drivers o generadores son capaces de generar eventos SAX de fuentes que no son documentos XML. Los eventos pueden ser utilizados entonces con cualquier manejador SAX. </p><p>Muchos generadores SAX son la base para conversiones de estos documentos a otros formatos. En CPAN disponemos de <a href="http://search.cpan.org/perldoc?Pod%3A%3ASAX" target="_top">Pod::SAX</a>, que recibe de entrada archivos Pod (o Perl que contienen textos Pod), generando eventos SAX;  <a href="http://search.cpan.org/perldoc?Text%3A%3AWikiFormat%3A%3ASAX" target="_top">Text::WikiFormat::SAX</a> es un generador para documentos de Twiki;  <a href="http://search.cpan.org/perldoc?WAP%3A%3ASAXDriver%3A%3Awbxml" target="_top">WAP::SAXDriver::wbxml</a> trata documentos wbxml;  <a href="http://search.cpan.org/perldoc?XML%3A%3ASAXDriver%3A%3AvCard" target="_top">XML::SAXDriver::vCard</a> documentos vCard;  <a href="http://search.cpan.org/perldoc?XML%3A%3ASAXDriver%3A%3AExcel" target="_top">XML::SAXDriver::Excel</a>, los de esta popular hoja de cálculo;  <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3ARTF" target="_top">XML::SAX::RTF</a>, los de este formato de texto;  <a href="http://search.cpan.org/perldoc?XML%3A%3ASAXDriver%3A%3ACSV" target="_top">XML::SAXDriver::CSV</a>, archivos CVS.</p><p>Íntimamente ligados a este planteamiento son los generadores que utilizan como fuente salidas de aplicaciones, que tratan como si fuera un documento. Así,  <a href="http://search.cpan.org/perldoc?Class%3A%3ADBI%3A%3AToSax" target="_top">Class::DBI::ToSax</a>, genera los eventos a partir de objetos de bases de datos DBI;  <a href="http://search.cpan.org/perldoc?XML%3A%3ADirectory%3A%3ASAX" target="_top">XML::Directory::SAX</a> utiliza como entrada un directorio del sistema de ficheros.</p><p>Hay también unos cuantos módulos relacionados con código, como <a href="http://search.cpan.org/perldoc?Perl%3A%3ASAX" target="_top">Perl::SAX</a>, que genera eventos a partir de código Perl. <a href="http://search.cpan.org/perldoc?Devel%3A%3ATraceSAX" target="_top">Devel::TraceSAX</a> sigue una orientación parecida. Para código de Python contamos con  <a href="http://search.cpan.org/perldoc?Python%3A%3ABytecode%3A%3ASAX" target="_top">Python::Bytecode::SAX</a>.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AGDOME%3A%3ASAX%3A%3AParser" target="_top">XML::GDOME::SAX::Parser</a>, basado en <a href="http://www.levien.com/gnome/gdome.html" target="_top">GDOME</a>, es capaz de generar eventos SAX desde un árbol DOM. Un resultado similar lo consigue <a href="http://search.cpan.org/perldoc?XML%3A%3ALibXML%3A%3ASAX%3A%3AGenerator" target="_top">XML::LibXML::SAX::Generator</a>, a partir de <a href="http://xmlsoft.org/" target="_top">libxml2</a>. <a href="http://search.cpan.org/perldoc?XML%3A%3AXPath%3A%3APerlSAX" target="_top">XML::XPath::PerlSAX</a> genera eventos a partir de nodos XPath, eventos que pueden pasarse a un manejador que soporte XML::PerlSAX. Obviamente está limitado a SAX1.</p><a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3ABase" target="_top">XML::SAX::Base</a> nos ofrece un punto de partida para contruir un generador.  Contamos con excelentes tutoriales para construir generadores en Perl, como <a href="http://www.xml.com/pub/a/2001/09/19/sax-non-xml-data.html" target="_top">éste</a> de Kip Hampton.
+</div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2382797"></a>Filtros</h4></div></div></div><p>Los filtros suelen realizar tareas específicas en necesidades concretas, pero hay en CPAN unos cuantos filtros genéricos, diseñados para suplir deficiencias o ampliar las posibilidades del procesador o del manejador que está antes del filtro:</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3ACharacterChunk" target="_top">XML::Filter::CharacterChunk</a> por ejemplo permite tratar correctamente determinados elementos, que el procesador puede ver de manera errónea.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3ABufferText" target="_top">XML::Filter::BufferText</a> une elementos de texto consecutivos, que se producen en ocasiones como resultado de una errónea apreciación del procesador, que detecta como varios textos lo que en realidad es uno.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3ACache" target="_top">XML::Filter::Cache</a> añade una caché al procesador, y de allí extrae los eventos el manejador.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3ADetectWS" target="_top">XML::Filter::DetectWS</a> intercepta los espacios en blanco que pueden ser ignorados.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3AReindent" target="_top">XML::Filter::Reindent</a> reformatea el documento XML con indentado, como hemos visto en ejemplos anteriores.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3ASAX1toSAX2" target="_top">XML::Filter::SAX1toSAX2</a>  permite utilizar procesadores SAX1 con manejadores o filtros SAX2.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3APerlSAX2" target="_top">XML::Perl2SAX</a> es un filtro SAX que convierte los métodos SAX al estilo Perl en los correspondientes del estilo de Java/CORBA. Lo contrario puede obtenerse de otro filtro, <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX2Perl" target="_top">XML::SAX2Perl</a>.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3AExceptionLocator" target="_top">XML::Filter::ExceptionLocator</a> añade números de línea y columna a los errors generados por los manejadores.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3ASort" target="_top">XML::Filter::Sort</a> ordena fragmentos del documento XML como si fueran registros. Incluye una utilidad, xmlsort, que puede ser utilizada desde la linea de comandos.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3ABase" target="_top">XML::SAX::Base</a> nos provee de un punto de partida para construir filtros personalizados. El tutorial de Kip Hampton <a href="http://www.xml.com/pub/a/2001/10/10/sax-filters.html" target="_top">Transforming XML With SAX Filters</a> y el tutorial del Calendario de Adviento de Perl de 2002, <a href="http://perladvent.org/2002/9th/" target="_top">XML::SAX</a> son una magnífica guía.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2382968"></a>Manejadores</h4></div></div></div><p>Los manejadores son el último eslabón de la cadana SAX. Reciben los eventos de un procesador, de un generador o de un filtro y ejecutan las medidas oportunas. Suele ser la tarea más personalizada del ensamblaje SAX, y es fácil construirse uno dedicado a nuestros propósitos. Para esta tarea quizá nos auxiliaremos con  <a href="http://search.cpan.org/perldoc?Test%3A%3AXML%3A%3ASAX" target="_top">Test::XML::SAX</a>, dedicado a la depuración de manejadores. Contamos con un esqueleto ya preparado,  <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3ASample" target="_top">XML::Handler::Sample</a>, sobre el que escribir uno propio es muy sencillo.</p><p>A pesar de ello, un uso típico de los manejadores es ejecutar tareas intermedias en un proceso que abarca más que la cadena SAX, permitiendo después el uso de otros módulos. Por ejemplo, los que construyen árboles DOM desde eventos SAX, especialmente indicados para tratar posteriormente la salida con XSLT. Si se combinan con generadores de eventos que tienen como fuente documentos no XML sirven como conversores de formatos. Para ser utilizado con Sablotron está  <a href="http://search.cpan.org/perldoc?XML%3A%3ASablotron%3A%3ASAXBuilder" target="_top">XML::Sablotron::SAXBuilder</a>. El módulo  <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3ABuildDOM" target="_top">XML::Handler::BuildDOM</a> tiene un propósito similar.</p><p>Existen en CPAN unos cuantos manejadores SAX que realizan tareas específicas. Así,  <a href="http://search.cpan.org/perldoc?SVG%3A%3AParser%3A%3ASAX" target="_top">SVG::Parser::SAX</a>:Handler obtiene una salida SVG a partir de los eventos SAX generados utilizando de entrada un documento XML.  <a href="http://search.cpan.org/perldoc?Data%3A%3AStag%3A%3ASAX2Stag" target="_top">Data::Stag::SAX2Stag</a> recibe eventos SAX y devuelve eventos Stag. <a href="http://search.cpan.org/perldoc?Bio%3A%3AOntologyIO%3A%3AHandlers%3A%3ABaseSAXHandler" target="_top">Bio::OntologyIO::Handlers::BaseSAXHandler</a> de <a href="http://search.cpan.org/perldoc?Bioperl" target="_top">Bioperl</a> es sólo un esqueleto, que proporciona los métodos básicos que la aplicación final debe terminar.  <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3AAxPoint" target="_top">XML::Handler::AxPoint</a> convierte documentos AxPoint en PDF. De los manejadores específicos para documentación de DTDs,  <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3ADtd2DocBook" target="_top">XML::Handler::Dtd2DocBook</a> y  <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3ADtd2Html" target="_top">XML::Handler::Dtd2Html</a> hablamos en otro apartado de este texto.  <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3APdb" target="_top">XML::Handler::Pdb</a> crea una base de datos Palm desde un documento XML.  <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3AHTMLWriter" target="_top">XML::Handler::HTMLWriter</a> obtiene documentos HTML 4.0 desde entradas XHTML.</p><p>Un grupo de manejadores crean documentos XML; su uso habitual es para depuración o visualización rápida del contenido de los documentos, o volcar el resultado obtenido por un generador trantando documentos no XML. El veterano  <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3AYAWriter" target="_top">XML::Handler::YAWriter</a> se limita a SAX1, y si deseamos SAX2 debemos acudir a  <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3AWriter" target="_top">XML::SAX::Writer</a>. Otras alternativas son  <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3AComposer" target="_top">XML::Handler::Composer</a>,  <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3ACanonXMLWriter" target="_top">XML::Handler::CanonXMLWriter</a> y  <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3AXMLWriter" target="_top">XML::Handler::XMLWriter</a>.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AChecker" target="_top">XML::Checker</a> puede ser utilizado entre otras maneras como manejador SAX. Con él podemos validar documentos contra DTDs.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2383196"></a>Alternativas a DOM y SAX</h3></div></div></div><p>El veterano <a href="http://search.cpan.org/perldoc?XML%3A%3AParser" target="_top">XML::Parser</a> ha sido durante mucho tiempo la referencia en los tratamientos de flujo en el mundo Perl-XML. Es un módulo de muy bajo nivel, y en la actualidad se desaconseja su uso, en favor de los más flexibles procesadores SAX. Véanse las <a href="http://search.cpan.org/dist/XML-SAX/SAX/Intro.pod" target="_top">explicaciones</a> de Matt Sergeant al respecto, entre las que destaca el hecho de que su API no está entandarizada, lo que hace muy difícil utilizar otros módulos. En CPAN hay otros procesadores de flujo con una API similar, como <a href="http://search.cpan.org/perldoc?PXR%3A%3AParser" target="_top">PXR::Parser</a> y <a href="http://search.cpan.org/perldoc?XML%3A%3AParser%3A%3ALite" target="_top">XML::Parser::Lite</a> a los que se les pueden hacer las mismas objeciones.</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2383251"></a>PYX</h4></div></div></div><a href="http://www.xml.com/pub/a/2000/03/15/feature/" target="_top">PYX</a> es seguramente el más simple de los modelos que utilizan el paradigma de la serialización de los documentos XML. Los describe mediante un subconjunto del formato  SGML <a href="http://www.iso.org/iso/en/CatalogueDetailPage.CatalogueDetail?CSNUMBER=16387" target="_top">ESIS</a> como lineas de texto precedidas por una indicación sobre su tipo. Los posibles tipos de elementos de la serie son tan sólo cinco:
+
+<div class="itemizedlist"><ul type="disc"><li><p>(  	start-tag</p></li><li><p>) 	end-tag</p></li><li><p>A 	attribute</p></li><li><p>- 	character data</p></li><li><p>? 	processing instruction</p></li></ul></div><p>Una vez obtenida la conversión, las expresiones regulares pueden ser utilizadas para filtrarla, incluso desde la línea de comandos, gracias a las utilidades que vienen con el módulo <a href="http://search.cpan.org/perldoc?XML%3A%3APYX" target="_top">XML::PYX</a>. El filtro puede actuar en ambos sentidos, siendo trivial construir archivos XML desde la notación PYX.</p><p>Este ejemplo cuenta los elementos title de nuestro archivo sidebar.xml, es decir las líneas que comienzan con el carácter ( seguido del texto title:</p><pre class="programlisting">pyx sidebar.xml | grep "(title" | wc -l
+2</pre><p>Otro módulo que implementa PYX es <a href="http://search.cpan.org/perldoc?XML%3A%3ATiePYX" target="_top">XML::TiePYX</a>.</p><p>Su significativa simplificación lo hace muy eficiente en documentos no complejos, aunque no le permite ser utilizado como herramienta genérica.</p><p>Pero simplicidad no es enemiga de potencia. Los trabajos de Michel Rodriguez <a href="http://xmltwig.com/article/bw/bw_07-pyx_simple.html" target="_top">Simple XML Transformation with Perl</a> y <a href="http://xmltwig.com/article/ways_to_rome/ways_to_rome.html#pyx" target="_top">Ways to Rome: Processing XML with Perl</a> muestran ejemplos de transformaciones de documentos con esta herramienta. </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2383388"></a>Grove</h4></div></div></div><p>Grove, descrito en la especificación SGML <a href="http://www.ornl.gov/sgml/wg8/docs/n1920/" target="_top">HyTime</a>, es otro modelo que intenta representar los documentos XML. Éstos son vistos como un conjunto de nodos, que son conjuntos de propiedades, que pueden ser valores atómicos (cadenas, enteros, booleanos), listas de nodos o referencias a otros nodos.</p><p><a href="http://search.cpan.org/perldoc?libxml-perl" target="_top">libxml-perl</a> construye una implementación de ese modelo, proveyendo de varios módulos base y de un manejador SAX, <a href="http://search.cpan.org/perldoc?XML%3A%3AGrove" target="_top">XML::Grove</a>, como herramienta final.</p><p>En este ejemplo presentamos dos propiedades del nodo raíz: El nombre y sus atributos:</p><pre class="programlisting">use XML::Parser::PerlSAX;
+use XML::Grove::Builder;
+
+my $builder = XML::Grove::Builder-&gt;new;
+my $parser = XML::Parser::PerlSAX-&gt;new(Handler =&gt; $builder);
+my $grove = $parser-&gt;parse (Source =&gt; { SystemId =&gt; 'sidebar.xml'});
+my $root = $grove-&gt;{Contents}[0];
+print "Nombre: " . $root-&gt;{Name};
+print "\nAtributos:\n";
+$attrs = $root-&gt;{Attributes};       # name the root's attributs
+foreach $attr (keys %$attrs) {
+	print "\t$attr\t", %$attrs-&gt;{$attr} . "\n"
+};
+</pre><p>Véase el trabajo de Paul Prescod <a href="http://www.prescod.net/groves/shorttut/" target="_top">Addressing the Enterprise: Why the Web needs Groves</a> para una explicación de las cualidades de este modelo de datos.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2383467"></a>XML::Filter::Dispatcher</h4></div></div></div><p>En SAX la aplicación tiene un papel pasivo, a la espera de los eventos que reciba del procesador, y por tanto no mantiene información del estado del proceso del documento. A los procesadores SAX se les llama por ello <tt class="literal">push parsers</tt>.</p><p>La programación SAX se torna muy compleja cuando se tratan documentos de los que no se sabe exactamente antes su contenido. Observemos nuestro ejemplo: El elemento title puede aparecer como hijo de un elemento section y como hijo de un elemento item, y quizá deseamos un tratamiento diferente en cada caso. En SAX no tenemos un API que distinga ambas situaciones, el procesador sólo es capaz de producir un evento cuando se inicia o termina un elemento de nombre title, por lo que la rutina de tratamiento se hace más compleja. Con XPath esto es más sencillo, pues disponemos de todo el árbol antes de preguntar, y no habrá problemas en identificar los nodos adecuados.</p><p>Algunos módulos Perl intentan conjugar lo mejor de ambas orientaciones, la sobriedad de recursos y rapidez del proceso de flujo y la potencia del modelo de datos del árbol DOM. Se habla entonces de procesos <tt class="literal">push/pull</tt>, porque la apliación mantiene el control del documento y no es un simple receptor de eventos, y puede tener una visión conjunta del documento y pedir eventos, al estilo de lo que hace XPath al poner el foco en informaciones muy concretas, y sólo en esas. </p><p><a href="http://search.cpan.org/perldoc?XML%3A%3AFilter%3A%3ADispatcher" target="_top">XML::Filter::Dispatcher</a> nos ofrece acceso XPath a un flujo SAX. En realidad es una adaptación de XPath, denominada <tt class="literal">EvenPath</tt>. El módulo recibe varios parámetros para regular su conducta; el más importante es Rules, un hash de reglas que aplicar. Cada regla es a su vez un hash donde la clave es la regla EvenPath y el valor a su vez un arreglo de hashes con subrutinas donde se ejecuta el código Perl adecuado.</p><p>En este ejemplo imprimiremos los elementos title, indicando si son hijos de section o de item:</p><pre class="programlisting">#!/usr/bin/perl -w
+use XML::SAX::Machines qw( Pipeline );
+use XML::Filter::Dispatcher qw ( :all );;
+
+my $out='';
+my $xml= new XML::Filter::Dispatcher-&gt;new(
+	Rules =&gt; [
+		"/sidebar/section/title" =&gt;  [ 'string()' =&gt;
+                                   sub { $out .= "Section: ". xvalue() . "\n"; }
+				],
+		"/sidebar/section/item/title" =&gt;  [ 'string()' =&gt;
+                                   sub { $out .= "Item: ". xvalue() . "\n"; }
+				],
+	],
+);
+
+Pipeline($xml)-&gt;parse_uri("sidebar.xml");
+
+print $out;</pre><p>Sólo hemos indicado dos reglas, una para cada uno de los casos:</p><pre class="programlisting">Section: Mi web
+Item: Informacion</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2383595"></a>XML::Twig</h4></div></div></div><p><a href="http://search.cpan.org/perldoc?XML%3A%3AFilter" target="_top">XML::Twig</a> es una herramienta más madura y con un buen abanico de posibilidades. La idea inicial es también la de procesar tan sólo <tt class="literal">ramas</tt> (twigs) del árbol, a las que aplica un modelo de datos basado en DOM, pero descartando el resto. A partir de aquí es posible procesar esas ramas, suprimir o añadir elementos, o modificar su contenido.</p><p>El siguiente ejemplo es muy similar al anterior. Del documento de entrada obtendremos un nuevo documento XML con los títulos e información de su nodo padre, éste como atributo:</p><pre class="programlisting">#!/usr/bin/perl -w
+
+use XML::Twig;
+my $twig_handlers = {'sidebar' =&gt;  \&amp;root,
+			'section/title' =&gt;  \&amp;section_title,
+                     'item/title'   =&gt;  \&amp;item_title};
+my $twig= new XML::Twig(TwigRoots =&gt; {title =&gt; 1},
+                        TwigHandlers =&gt; $twig_handlers);
+
+$twig-&gt;parsefile("sidebar.xml");
+$twig-&gt;print;
+
+sub root{
+    	my ($twig, $title) = @_;
+	$title-&gt;set_gi( 'titles');
+}
+sub section_title{
+    	my ($twig, $title) = @_;
+	$title-&gt;set_att('DescendsFrom', 'section');
+}
+
+sub item_title {
+    	my ($twig, $title) = @_;
+	$title-&gt;set_att('DescendsFrom', 'item');
+}
+</pre><p>Vemos que el módulo recibe como parámetro un hash de <tt class="literal">manejadores</tt>, hashes indicando la regla XPath en la clave y una referencia a la rutina Perl a ejecutar en el valor. En la salida el tipo de documento ha sido cambiado de sidebar a titles y hemos creado un elemento por cada titulo encontrado:</p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;titles&gt;&lt;title DescendsFrom="section"&gt;Mi web&lt;/title&gt;&lt;title DescendsFrom="item"&gt;Informacion&lt;/title&gt;&lt;/titles&gt;</pre><a href="http://search.cpan.org/perldoc?XML%3A%3AFilter" target="_top">XML::Twig</a> es un módulo bien documentado. El estupendo tutorial de su autor, Michel Rodriguez,  <a href="http://www.xmltwig.com/xmltwig/tutorial/index.html" target="_top">Processing XML efficiently with Perl and XML::Twig</a> cubre en detalle sus posibilidades. Una introducción más liviana la ha hecho Kip Hampton con <a href="http://www.xml.com/pub/a/2001/03/21/xmltwig.html" target="_top">Using XML::Twig</a>.</div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2383700"></a>Definiciones de documentos</h3></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2383707"></a>DTD</h4></div></div></div><p>Los DTD fueron el sistema original de definir lenguages XML, y por tanto están regulados en la <a href="http://www.w3.org/TR/REC-xml/" target="_top">recomendación</a> de XML (hay <a href="http://www.sidar.org/recur/desdi/traduc/es/xml/xml1/index.html" target="_top">traducción castellana</a>, aunque no actualizada).</p><p>Los documentos de nuestro ejemplo no tienen una definición formal, pero está implícita en el archivo sidebar.xml que se incluye en la <a href="http://search.cpan.org/CPAN/authors/id/M/MS/MSERGEANT/AxKit-1.6.2.tar.gz" target="_top">distribución 1.6.2</a> de <a href="http://axkit.org/" target="_top">AxKit</a>. En nuestro caso el elemento raíz, sidebar, se compone de un conjunto de nodos section identificados por un elemento title; estos nodos section a su vez incluyen nodos simples, item, o compuestos, subsection, que abren conjuntos de nodos item. Vemos que los nodos compuestos pueden aparecer expandidos (por defecto no), y que de cada item nos interesa el título y la URL. Los elementos section/subsection no crean una estructura recursiva, tan sólo una jerarquía de nodos en dos niveles. El archivo lo llamaremos sidebar.dtd.</p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!ELEMENT sidebar (section+)&gt;
+&lt;!ELEMENT section (title, (subsection|item)+ )&gt;
+&lt;!ELEMENT subsection (title, url, item+)&gt;
+&lt;!ATTLIST subsection expand ( yes | no ) "no"&gt;
+&lt;!ELEMENT item (title, url)&gt;
+&lt;!ELEMENT title (#PCDATA)&gt;
+&lt;!ELEMENT url (#PCDATA)&gt;</pre><p>Si lo que deseamos es simplemente conocer la estructura de un DTD existente podemos usar el módulo <a href="http://search.cpan.org/perldoc?XML%3A%3ADTDParser" target="_top">XML::DTDParser</a>, un procesador simple que nos permite un volcado a estructuras de Perl. La única variación posible es utilizar un escalar  como único parámetro, en lugar de un archivo que contenga el DTD. El módulo retorna un hash de hashes con información del DTD; no existen métodos de interrogación a la estructura, sino que hemos de hacerlo todo nosotros. En nuestro ejemplo podemos visualizar la descripción que hace con <a href="http://search.cpan.org/perldoc?Data%3A%3ADumper" target="_top">Data::Dumper</a>:</p><pre class="programlisting">#!/usr/bin/perl
+use XML::DTDParser qw(ParseDTD ParseDTDFile);
+use Data::Dumper;
+my $DTD = ParseDTDFile( "sidebar.dtd");
+print Dumper $DTD;</pre><p>Si reproducimos una parte de la salida, la del elemento compuesto item nos hacemos una idea de cuál es la información que procesa el módulo, sistematizando el DTD. Se trata de una información específica del módulo, puesto que las estructuras Perl para los DTDs no han sido objeto de especificaciones:</p><pre class="programlisting">          'item' =&gt; {
+                      'childrenARR' =&gt; [
+                                         'title',
+                                         'url'
+                                       ],
+                      'parent' =&gt; [
+                                    'subsection',
+                                    'section'
+                                  ],
+                      'childrenX' =&gt; {
+                                       'url' =&gt; '1',
+                                       'title' =&gt; '1'
+                                     },
+                      'childrenSTR' =&gt; '(title, url)',
+                      'option' =&gt; '*',
+                      'children' =&gt; {
+                                      'url' =&gt; '!',
+                                      'title' =&gt; '!'
+                                    }
+                    },</pre><p>El módulo <a href="http://search.cpan.org/perldoc?XML%3A%3AParseDTD" target="_top">XML::ParseDTD</a> es más completo, y nos  provee de métodos para interrogar al dtd, averiguando así qué elementos contiene, cuáles son definidos como vacíos, qué atributos están permitidos en un elemento, cuáles son los valores permitidos para un atributo, qué atributos son obligatorios, cuáles son los atributos por defecto y qué atributos tienen valor constante. En todo caso es limitado: No se pueden utilizar entidades en los DTDs.</p><p>En este sencillo ejemplo mostramos qué elementos contiene el DTD y sus atributos, utilizando los métodos del módulo get_document_tags y get_attributes:</p><pre class="programlisting">#!/usr/bin/perl
+use XML::ParseDTD;
+$dtd = XML::ParseDTD-&gt;new('sidebar.dtd');
+@tags = $dtd-&gt;get_document_tags();
+foreach $tag (@tags) {
+        @attributes = $dtd-&gt;get_attributes($tag);
+        print "$tag - @attributes \n";
+}
+</pre><pre class="programlisting">sidebar -
+subsection - expand
+item -
+url -
+section -
+title -
+</pre><p>El más completo de este grupo es <a href="http://search.cpan.org/perldoc?XML%3A%3ASmart%3A%3ADTD" target="_top">XML::Smart::DTD</a>, basado en <a href="http://search.cpan.org/perldoc?XML%3A%3ADTDParser" target="_top">XML::DTDParser</a>, que ofrece 29 métodos de acceso al DTD completo o sus partes. Por ejemplo, este método is_elem_pcdata:</p><pre class="programlisting">#!/usr/bin/perl
+  use XML::Smart::DTD ;
+
+    my $dtd = XML::Smart::DTD-&gt;new('sidebar.dtd') ;
+
+   if ( $dtd-&gt;is_elem_pcdata ('title'))  {
+          print "title es PCDATA\n";
+   }</pre><pre class="programlisting">title es PCDATA</pre><p>Otra aproximación nos la ofrece <a href="http://search.cpan.org/perldoc?XML%3A%3AStream%3A%3AParser%3A%3ADTD" target="_top">XML::Stream::Parser::DTD</a>. Utilizado como los procesadores anteriores nos ofrece información sistematizada del DTD:</p><pre class="programlisting">#!/usr/bin/perl
+use XML::Stream::Parser::DTD;
+use Data::Dumper;
+my $parser = new XML::Stream::Parser::DTD(uri=&gt;'sidebar.dtd');
+print Dumper $parser;</pre><p>Su propósito no obstante es disponer de un procesador de flujo de DTDs, y nos provee de métodos para transformar la estructura devuelta, en concreto la posibilidad de añadir o borrar nodos y atributos. Como tantos otros módulos, ha sido construido como auxiliar en otras tareas, y está incompleto, por lo que aún no podemos implementar los eventos típicos de SAX.</p><p>La especificación Perl SAX sí define eventos de DTD, opcionales para los procesadores, pero sólo <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3AExpat" target="_top">XML::SAX::Expat</a> contiene la totalidad de los eventos para DTD en la especificación incluido el soporte de entidades externas, mientras <a href="http://search.cpan.org/perldoc?XML%3A%3AParser%3A%3APerlSAX" target="_top">XML::Parser::PerlSAX</a> contiene un subconjunto significativo. No hay en CPAN manejadores que se dediquen completamente a DTDs, pero muchos de los existentes incluyen alguno de estos eventos para tareas específicas. En el apartado de SAX hay algunos enlaces con ayuda para construir manejadores y filtros.</p><p>El objetivo de estos módulos suele ser utilizar la información del DTD para otros propósitos, como índices o tesauros. Otros módulos sin embargo están orientados a generar documentación a partir de los DTDs, útiles sobre todo a organizaciones con una cierta complejidad de tipos de documento. Ése es el propósito de <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3ADtd2Html" target="_top">XML::Handler::Dtd2Html</a>. Se dispone también de un programa, dtd2html.pl, que envuelve las clases y métodos del módulo en un ejecutable desde la línea de comandos.</p><p>Su uso es algo complejo; estamos ante herramientas para los mantenedores de los DTDs, y eso ha de tenerse en cuenta. Deben definirse unas plantillas de descripción del tipo de documento (hay algunas de ejemplo en el tarball); es un filtro SAX2, lo que exige que la fuente sea un documento XML, y los DTD no lo son, o sea que se han de utilizar o bien integrándolos en uno de aquéllos, o bien invocándolos como entidad externa. Por último como la finalidad es <tt class="literal">documentar</tt> el DTD, se requiere que vayamos colocando comentarios explicativos antes de cada entrada de elemento o atributo. Lo de siempre con los programas de autodocumentación: No encontraremos en el resultado nada que no haya sido escrito antes.</p><p>Un fragmento de nuestro DTD de ejemplo sería:</p><pre class="programlisting">&lt;!-- @BRIEF : root element of sidebar doctype --&gt;
+ &lt;!-- It's the root element of a sidebar document type,
+ used in webs for quick and easy access --&gt;
+ &lt;!-- HISTORY : v0.1 - Initial release --&gt;
+&lt;!ELEMENT sidebar (section+)&gt;
+ &lt;!-- First element in sidebar hierarchy,
+  usually is a web first index link  --&gt;
+&lt;!ELEMENT section (title, (subsection|item)+ )&gt;</pre>
+...
+
+<p>Necesitariamos un documento XML real que invocara el DTD para ser procesado. En él incluiremos la llamada al DTD externo:</p><pre class="programlisting">&lt;!DOCTYPE sidebar SYSTEM "sidebar.dtd"&gt;</pre><p>Si a este último documento lo hemos llamado sidebar.xml, y deseamos que la salida sea descripcion.html, el uso más simple sería:</p><pre class="programlisting">dtd2html.pl -o descripcion sidebar.xml</pre><p>El documento resultante puede ser largo, sobre todo si hemos elaborado una plantilla extensa, y contendrá enlaces a cada uno de los <tt class="literal">campos</tt> descritos. Así el elemento title que preparamos más arriba podría formatearse (con la plantilla por defecto, claro):</p><pre class="programlisting">&lt;a id='elt_section' name='elt_section'/&gt;
+&lt;h3&gt;section&lt;/h3&gt;
+&lt;p&gt;&amp;lt;&lt;span class='keyword1'&gt;!ELEMENT&lt;/span&gt; section ( &lt;span class='keyword1'&gt;#PCDATA&lt;/span&gt;  ) &amp;gt;&lt;/p&gt;
+&lt;p class='comment'&gt; First element in sidebar hierarchy, usually is a web first index link .&lt;/p&gt;</pre><p>Si deseamos otras salidas, el mismo autor nos facilita otro módulo, <a href="http://search.cpan.org/perldoc?XML%3A%3AHandler%3A%3ADtd2DocBook.pm" target="_top">XML::Handler::Dtd2DocBook</a>, que formatea esta información en DocBook. Esta vez se pueden utilizar las facilidades de sus hojas de estilo, y por tanto generar un documento PDF con la información, otro en formato chm o un grupo navegable de archivos html, uno por cada parte relevante del dtd original.</p><p>Herramientas que construyan información automáticamente a partir de un DTD, sin preparación previa como el caso anterior, hay bastantes; en Perl contamos con el estupendo <a href="http://nwalsh.com/perl/dtdparse/" target="_top">DTDParse</a>.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2384165"></a>XML Schema</h4></div></div></div><p>El <a href="http://www.w3.org/TR/xmlschema-1/" target="_top">Esquema XML</a> es el segundo de los sistemas de descripción de los documentos XML, y pretende resolver las limitaciones de los DTD con los espacios de nombres, tipos de elementos o restricciones en tipos y atributos.</p><p>El tipo sidebar que nos sirve de ejemplo podría ser representado así:</p><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;schema xmlns='http://www.w3.org/2001/XMLSchema'&gt;
+
+  &lt;element name='sidebar'&gt;
+    &lt;complexType&gt;
+      &lt;choice minOccurs='0' maxOccurs='unbounded'&gt;
+        &lt;element ref='section'/&gt;
+      &lt;/choice&gt;
+    &lt;/complexType&gt;
+  &lt;/element&gt;
+
+  &lt;element name='subsection'&gt;
+    &lt;complexType&gt;
+      &lt;choice minOccurs='0' maxOccurs='unbounded'&gt;
+        &lt;element ref='item'/&gt;
+        &lt;element ref='url'/&gt;
+        &lt;element ref='title'/&gt;
+      &lt;/choice&gt;
+      &lt;attribute name='expand' type='string'/&gt;
+    &lt;/complexType&gt;
+  &lt;/element&gt;
+
+  &lt;element name='url'  type='string'&gt;
+    &lt;complexType&gt;
+    &lt;/complexType&gt;
+  &lt;/element&gt;
+
+  &lt;element name='item'&gt;
+    &lt;complexType&gt;
+      &lt;choice minOccurs='0' maxOccurs='unbounded'&gt;
+        &lt;element ref='url'/&gt;
+        &lt;element ref='title'/&gt;
+      &lt;/choice&gt;
+    &lt;/complexType&gt;
+  &lt;/element&gt;
+
+  &lt;element name='title'  type='string'&gt;
+    &lt;complexType&gt;
+    &lt;/complexType&gt;
+  &lt;/element&gt;
+
+  &lt;element name='section'&gt;
+    &lt;complexType&gt;
+      &lt;choice minOccurs='0' maxOccurs='unbounded'&gt;
+        &lt;element ref='subsection'/&gt;
+        &lt;element ref='item'/&gt;
+        &lt;element ref='title'/&gt;
+      &lt;/choice&gt;
+    &lt;/complexType&gt;
+  &lt;/element&gt;
+
+&lt;/schema&gt;</pre><p>El módulo <a href="http://search.cpan.org/perldoc?XML%3A%3ASchema" target="_top">XML::Schema</a> provee de métodos con los que construir un esquema XML y validar un documento contra él. No puede utilizar esquemas directamente, sino que debemos contruir la estructura perl previamente, y después validar.</p><p>Así, el fragmento de nuestra definición de tipo de documento sidebar que describe la estructura item/title/url podría ser utilizado por XML::Schema como:</p><pre class="programlisting">use XML::Schema;
+
+# create a schema
+my $schema = XML::Schema-&gt;new();
+
+# define simple type for url
+my $urlType = $schema-&gt;simpleType( name =&gt; 'url', base =&gt; 'string' );
+
+# define simple type for title
+my $titleTipe = $schema-&gt;simpleType( name =&gt; 'title', base =&gt; 'string' );
+
+# define a 'item' complex type
+my $item = $schema-&gt;complexType( name =&gt; 'itemType' );
+
+# define 'item' content model
+$item-&gt;content(
+    sequence =&gt; [
+    {   element =&gt; $item-&gt;element( name =&gt; 'title', type =&gt; 'titleType' ),
+        min =&gt; 1,
+        max =&gt; 1,
+    },
+    {   element =&gt; $item-&gt;element( name =&gt; 'url', type =&gt; 'urlType' ),
+        min =&gt; 1,
+        max =&gt; 1,
+    }
+],
+);
+
+# add item element to schema
+$schema-&gt;element( name =&gt; 'item', type =&gt; 'itemType' )
+    || die $schema-&gt;error();</pre><p><a href="http://search.cpan.org/perldoc?WSDL%3A%3AGenerator%3A%3ASchema" target="_top">WSDL::Generator::Schema</a> es capaz de generar esquemas XML a partir de documentos WSDL.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2384274"></a>Conversiones</h4></div></div></div><p>Para convertir un DTD a XML Schema podemos utilizar <a href="http://www.w3.org/2000/04/schema_hack/dtd2xsd.pl" target="_top">dtd2xsd.pl</a>.</p><p>Para extraer esquemas de documentos IDL disponemos de <a href="http://search.cpan.org/~perrad/CORBA-XMLSchemas-0.21/idl2xsd.pl" target="_top">idl2xsd</a>. También podemos hacer que la salida sea un esquema de Relax NG con <a href="http://search.cpan.org/~perrad/CORBA-XMLSchemas-0.21/idl2rng.pl" target="_top">idl2rng</a>.</p><p><a href="http://search.cpan.org/perldoc?XML%3A%3ARDB" target="_top">XML::RDB</a> provee de métodos para extraer de un documento XML un esquema RDB, o convertir un esquema XML en un esquema RDB.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2384328"></a>Validación</h3></div></div></div><p>La mayoría de los procesadores XML son no validadores, o tienen deshabilitada esta opción por defecto; nos informan sólo de errores si el documento no es bien formado. Ello es porque la validación es un proceso normalmente ligado a la construcción del documento XML, y después se hace un lastre en términos de tiempo y recursos. En el caso de los documentos construidos por aplicaciones intermedias, la validación es innecesaria. En numerosas ocasiones sin embargo necesitamos comprobar que los documentos siguen las reglas previstas, por lo que necesitaremos un procesador validador.</p><p>Hay herramientas en Perl para validar documentos XML de tres maneras, con los estándares DTD y esquemas XML, y con <a href="http://xml.ascc.net/resource/schematron/schematron.html" target="_top">Schematron</a>. Sin embargo en la actualidad no las hay para utilizar directamente <a href="http://www.oasis-open.org/committees/relax-ng/" target="_top">Relax NG</a>, que es un sistema emergente.</p><p>Para este apartado utilizaremos un documento no válido del tipo sidebar (sidebar.xml), que incluye un elemento subsection como hijo de un nodo item, lo que no está permitido:</p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!DOCTYPE sidebar SYSTEM "sidebar.dtd"&gt;
+&lt;sidebar&gt;
+	&lt;section&gt;
+	&lt;title&gt;Mi web&lt;/title&gt;
+	&lt;item&gt;
+		&lt;title&gt;Informacion&lt;/title&gt;
+		&lt;url&gt;/Informacion/&lt;/url&gt;
+		&lt;subsection&gt;Informacion&lt;/subsection&gt;
+	&lt;/item&gt;
+	&lt;/section&gt;
+&lt;/sidebar&gt;</pre><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2384390"></a>DTD</h4></div></div></div><p><a href="http://search.cpan.org/perldoc?XML%3A%3AChecker%3A%3AParser" target="_top">XML::Checker::Parser</a> provee validación sobre el procesador <a href="http://search.cpan.org/perldoc?XML%3A%3AParser" target="_top">XML::Parser</a>:</p><pre class="programlisting">#!/usr/bin/perl
+use XML::Checker::Parser;
+
+my $xp = new XML::Checker::Parser (
+    Handlers =&gt; { },
+    ParseParamEnt =&gt; 1,
+    SkipExternalDTD  =&gt; 1,
+  );
+eval {
+  $xp-&gt;parsefile("sidebar.xml");
+};
+if ($@) {
+  # ... your error handling code here ...
+  print "$xml_file failed validation!\n";
+  die "$@";
+}</pre><p>Por defecto el módulo espera que el DTD sea interno, y nuestro ejemplo lo declaraba como entidad externa, por lo que hay que habilitar la opción de <a href="http://search.cpan.org/perldoc?XML%3A%3AParser" target="_top">XML::Parser</a> ParseParamEnt y la de <a href="http://search.cpan.org/perldoc?XML%3A%3AChecker%3A%3AParser" target="_top">XML::Checker::Parser</a> SkipExternalDTD.</p><pre class="programlisting">XML::Checker ERROR-157: unexpected Element [subsection]
+        Context: ChildElementIndex 2, line 9, column 2, byte 238
+XML::Checker ERROR-149: Element should only contain sub elements, found text [Informacion]
+        Context: line 9, column 14, byte 250
+XML::Checker ERROR-170: Element can't be empty Found=[] RE=[((title)(url)(item)+)]
+        Context: line 9, column 25, byte 261</pre><p>Otra opción sería la de utilizar <a href="http://search.cpan.org/perldoc?XML%3A%3AChecker" target="_top">XML::Checker</a> con el procesador <a href="http://search.cpan.org/perldoc?XML%3A%3ADOM%3A%3AParser" target="_top">XML::DOM::Parser</a> por debajo, en lugar de <a href="http://search.cpan.org/perldoc?XML%3A%3AParser" target="_top">XML::Parser</a>. Es lo que hace <a href="http://search.cpan.org/perldoc?XML%3A%3ADOM%3A%3AValParser" target="_top">XML::DOM::Valparser</a>.</p><p>Otro procesador con validación contra DTDs es <a href="http://search.cpan.org/perldoc?XML%3A%3ALibXML" target="_top">XML::LibXML</a>, un wrapper de la librería <a href="http://xmlsoft.org/" target="_top">libxml2</a>:</p><pre class="programlisting">#!/usr/bin/perl
+use XML::LibXML;
+$parser = XML::LibXML-&gt;new();
+$parser-&gt;validation(1);
+$doc = $parser-&gt;parse_file("sidebar.xml");</pre><p>Por defecto este procesador no valida, debe activarse la función con el método validation:</p><pre class="programlisting">sidebar.xml:9: element subsection: validity error : Element subsection content does not follow the DTD
+                &lt;subsection&gt;Informacion&lt;/subsection&gt;
+                                                    ^
+sidebar.xml:10: element item: validity error : Element item content does not follow the DTD
+        &lt;/item&gt;
+               ^
+ at prueba.pl line 7</pre>
+
+Por último, podemos recurrir a <a href="http://search.cpan.org/perldoc?XML%3A%3AXerces" target="_top">XML::Xerces</a>, el interfaz de perl sobre la librería C++ de <a href="http://xml.apache.org/xerces-c/" target="_top">Xerces</a>.
+
+</div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2384553"></a>XML Schema</h4></div></div></div><p>La validación contra esquemas XML está cambiando rápidamente, fruto de la cada vez mayor importancia de esta técnica de descripción de tipos de documento XML, y próximamente serán más los procesadores capaces de soportarlos.</p><p>El módulo <a href="http://search.cpan.org/perldoc?XML%3A%3AValidator%3A%3ASchema" target="_top">XML::Validator::Schema</a> nos permite llevar a cabo esta validación. Es un filtro SAX, por lo que tendremos que incluirlo en algún sistema que los admita. En este caso utilizaremos un simple procesador para generar los eventos, <a href="http://search.cpan.org/perldoc?XML%3A%3ASAX%3A%3APurePerl" target="_top">XML::SAX::PurePerl</a>. El código de un sencillo test podría ser:</p><pre class="programlisting">#!/usr/bin/perl -w
+use XML::SAX::PurePerl;
+use XML::Validator::Schema;
+$validator = XML::Validator::Schema-&gt;new(file =&gt; 'sidebar.xsd');
+$parser = XML::SAX::PurePerl-&gt;parser(Handler =&gt; $validator);
+eval { $parser-&gt;parse_uri('sidebar.xml') };
+  die "File failed validation: $@" if $@;
+</pre><p>que nos demostrará que efectivamente nuestro documento no es válido:</p><pre class="programlisting">File failed validation: Found unexpected &lt;subsection&gt; inside &lt;item&gt;.  This is not a valid child element.</pre><p>Otra opción es recurrir a <a href="http://search.cpan.org/perldoc?XML%3A%3AXerces" target="_top">XML::Xerces</a>, el wrapper de perl sobre la librería C++ de <a href="http://xml.apache.org/xerces-c/" target="_top">Xerces</a>, que también permite validar contra esquemas. En esta ocasión deberemos incluir la referencia al esquema externo en nuestro documento XML, en la misma etiqueta inicial del elemento raíz, sidebar:</p><pre class="programlisting">&lt;sidebar xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation='sidebar.xsd'&gt;</pre><p>Nuestro ejemplo ha de establecer una serie de propiedades de XML:Xerces::XMLUni, en especial activar fgXercesSchema, que nos permitirá validar contra esquemas XML:</p><pre class="programlisting">use strict;
+use XML::Xerces;
+
+my $parser = XML::Xerces::XercesDOMParser-&gt;new();
+$parser-&gt;setValidationScheme($XML::Xerces::AbstractDOMParser::Val_Always);
+$parser-&gt;setDoNamespaces(1);
+$parser-&gt;setDoSchema (1);
+$parser-&gt;setErrorHandler(XML::Xerces::PerlErrorHandler-&gt;new);
+
+$parser-&gt;parse (XML::Xerces::LocalFileInputSource-&gt;new("sidebar.xml"));</pre><p>Nuestro procesador nos informa enseguida del error, aunque el mensaje no es tan claro como los anteriores:</p><pre class="programlisting">ERROR:
+FILE:    /var/tmp/cpan-xml/mas/sidebar.xsd
+LINE:    23
+COLUMN:  38
+MESSAGE: Element 'url' cannot have both a type attribute and a simpleType/complexType type child
+ at prueba5.pl line 10</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="id2384685"></a>Schematron</h4></div></div></div><p><a href="http://xml.ascc.net/resource/schematron/schematron.html" target="_top">Schematron</a> es otro sistema de establecer tipos de documentos XML. No busca una definición formal, sino enumerar qué reglas deben cumplirse para validar el documento. Un esquema Schematron es básicamente una lista de las reglas XPath usadas en la validación. En CPAN disponemos de <a href="http://search.cpan.org/perldoc?XML%3A%3ASchematron" target="_top">XML::Schematron</a>, un módulo que utiliza los servicios de un procesador XPath que realiza el chequeo de las reglas. Están disponibles sendas versiones sobre <a href="http://www.gingerall.com/charlie/ga/xml/p_sab.xml" target="_top">Sablotron</a> (<a href="http://search.cpan.org/perldoc?XML%3A%3ASchematron%3A%3ASablotron" target="_top">XML::Schematron::Sablotron</a>), sobre <a href="http://xmlsoft.org/XSLT/" target="_top">LibXSLT</a> (<a href="http://search.cpan.org/perldoc?XML%3A%3ASchematron%3A%3ALibXSLT" target="_top">XML::Schematron::LibXSLT</a>) y sobre <a href="http://search.cpan.org/perldoc?XML%3A%3AXPath" target="_top">XML::XPath</a> (<a href="http://search.cpan.org/perldoc?XML%3A%3ASchematron%3A%3AXPath" target="_top">XML::Schematron::XPath</a>).</p><p>En este <a href="http://www.xml.com/pub/a/2002/01/23/perl-schematron.html" target="_top">tutorial</a> de Kip Hampton podemos ver algunos ejemplos de su uso.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2384778"></a>Colofón</h3></div></div></div><p>Perl siempre ha destacado en el tratamiento de la información textual, y XML no es la excepción. Hay muchas iniciativas diferentes abordando el tema desde cualquier ángulo, ateniéndose a los estándares o sacrificándolos en aras de la eficiencia o de un modelo de datos más acorde a cada problema.</p><p>Pero hay muchos módulos XML en CPAN que ni siquiera hemos mencionado. Vé al <a href="http://search.cpan.org/" target="_top">buscador de CPAN</a> y entra en su telaraña.</p></div></div></body>
+<SCRIPT language="Javascript">
+<!--
+
+// FILE ARCHIVED ON 20050225220352 AND RETRIEVED FROM THE
+// INTERNET ARCHIVE ON 20080522133255.
+// JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+// ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+// SECTION 108(a)(3)).
+
+   var sWayBackCGI = "http://web.archive.org/web/20050225220352/";
+
+   function xResolveUrl(url) {
+      var image = new Image();
+      image.src = url;
+      return image.src;
+   }
+   function xLateUrl(aCollection, sProp) {
+      var i = 0;
+      for(i = 0; i < aCollection.length; i++) {
+         if (typeof(aCollection[i][sProp]) == "string") { 
+          if (aCollection[i][sProp].indexOf("mailto:") == -1 &&
+             aCollection[i][sProp].indexOf("javascript:") == -1) {
+            if(aCollection[i][sProp].indexOf("http") == 0) {
+                aCollection[i][sProp] = sWayBackCGI + aCollection[i][sProp];
+            } else {
+                aCollection[i][sProp] = sWayBackCGI + xResolveUrl(aCollection[i][sProp]);
+            }
+         }
+         }
+      }
+   }
+
+   xLateUrl(document.getElementsByTagName("IMG"),"src");
+   xLateUrl(document.getElementsByTagName("A"),"href");
+   xLateUrl(document.getElementsByTagName("AREA"),"href");
+   xLateUrl(document.getElementsByTagName("OBJECT"),"codebase");
+   xLateUrl(document.getElementsByTagName("OBJECT"),"data");
+   xLateUrl(document.getElementsByTagName("APPLET"),"codebase");
+   xLateUrl(document.getElementsByTagName("APPLET"),"archive");
+   xLateUrl(document.getElementsByTagName("EMBED"),"src");
+   xLateUrl(document.getElementsByTagName("BODY"),"background");
+   var forms = document.getElementsByTagName("FORM");
+   if (forms) {
+       var j = 0;
+       for (j = 0; j < forms.length; j++) {
+              f = forms[j];
+              if (typeof(f.action)  == "string") {
+                 if(typeof(f.method)  == "string") {
+                     if(typeof(f.method) != "post") {
+                        f.action = sWayBackCGI + f.action;
+                     }
+                  }
+              }
+        }
+    }
+
+
+//-->
+</SCRIPT>
+
+</html>
