@@ -1,0 +1,55 @@
+a img
+{
+	border: 0;
+}
+
+a:hover
+{
+	background-color:yellow;
+	color:red;
+}
+
+p,td,h1,h2,h3,li,a,label
+{
+    font-family:sans-serif;
+    text-align:left;
+    vertical-align:top;
+}
+
+body 
+{
+    color:black;
+    background-color:transparent;
+}
+
+h1
+{
+    border: solid 1px red;
+/*    font-size:1.3em; */
+    color:#900;
+    background-color:yellow;
+}
+
+h2
+{
+/*    font-size:1.2em; */
+}
+
+hr
+{
+    border: solid 1px red;
+    color:red;
+    background-color:yellow;
+}
+
+table
+{
+    border: dashed 1px #CCC;
+    background-color: white;
+    padding: 2px;
+}
+
+td
+{
+    border: solid 1px #CCF;
+}
