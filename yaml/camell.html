@@ -1,7 +1,6 @@
 <html>
 <head>
-<BASE HREF="http://barcelona.pm.org/yaml/camell.html">
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Presentación: El Camell i el YAML</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>PresentaciÃ³n: El Camell i el YAML</title>
 </head>
 <style>
 ul { border: 1; border-style: dashed; border-color:green; margin-right: 25px; margin-left: 25px; display: block;}
@@ -27,9 +26,8 @@ blockquote { background-color: lightgray;
 	display: block;
 	white-space:pre}
 </style>
-<body  onClick='vete([% number %])'>
+<body>
 <h1>El camell i el YAML</h1>
-<script type='text/javascript'>
 <div id='contenido'>
 <h2>J. J. Merelo</h2>
 
@@ -43,11 +41,10 @@ blockquote { background-color: lightgray;
 
 
 
-<h1>Por qué YAML?</h1>
-<script type='text/javascript'>
+<h1>Por quÃ© YAML?</h1>
 <div id='contenido'>
-<ul><li>Porque no se pueden matar moscas a cañonazos.</li>
-<li>Porque se usa cada vez más.</li>
+<ul><li>Porque no se pueden matar moscas a caÃ±onazos.</li>
+<li>Porque se usa cada vez mÃ¡s.</li>
 <li>Porque la cualidad principal del usuario de Perl es la pereza.</li>
 </ul>
 </div>
@@ -55,9 +52,8 @@ blockquote { background-color: lightgray;
 
 
 <h1>En el principio</h1>
-<script type='text/javascript'>
 <div id='contenido'>
-<ul><li>Existía <a href='http://search.cpan.org/~ingy/Data-Denter/Denter.pod'><var>Data::Denter</var></a>.</li>
+<ul><li>ExistÃ­a <a href='http://search.cpan.org/~ingy/Data-Denter/Denter.pod'><var>Data::Denter</var></a>.</li>
 <code>*** Data::Denter #1 ***
 %Menda::Lerenda
     Bolsillo => @
@@ -70,14 +66,13 @@ blockquote { background-color: lightgray;
 
 
 
-<h1>Pero qué diablos es, joé</h1>
-<script type='text/javascript'>
+<h1>Pero quÃ© diablos es, joÃ©</h1>
 <div id='contenido'>
 <ul><img align='right' src='xml-yaml-rebol-010204.png'>
 <li>YAML Ain't a Markup Language</li>
 <li>Un lenguaje de etiquetas sin etiquetas</li>
-<li>Un lenguaje de serialización simple y <em>ligero</em>.</li>
-<li>Un estándar público.</li>
+<li>Un lenguaje de serializaciÃ³n simple y <em>ligero</em>.</li>
+<li>Un estÃ¡ndar pÃºblico.</li>
 <li>Muy popular en lenguajes como el <a href='http://ruby-lang.org'>Ruby</a></li>
 <code>nombre: YAML
 sirvepara: cosas
@@ -88,59 +83,55 @@ esmuy: guay
 
 
 
-<h1>¿Tanto follón pa eso?</h1>
-<script type='text/javascript'>
+<h1>Â¿Tanto follÃ³n pa eso?</h1>
 <div id='contenido'>
-<ul><LI><dl><dt>Pero además</dt><dd>
-<li>Legible.</li><li>Editable.</li><li>Multilingüe.</li><li>A salvo de mancillas (<em>taint-safe</em>).</li><li>Puede serializar todas las estructuras normales.</li><li>Extensible a partir de un sistema de tipos.</li>
+<ul><LI><dl><dt>Pero ademÃ¡s</dt><dd>
+<li>Legible.</li><li>Editable.</li><li>MultilingÃ¼e.</li><li>A salvo de mancillas (<em>taint-safe</em>).</li><li>Puede serializar todas las estructuras normales.</li><li>Extensible a partir de un sistema de tipos.</li>
 </dd></dl></li>
 </ul>
 </div>
 
 
 
-<h1>¿Para qué sirve?</h1>
-<script type='text/javascript'>
+<h1>Â¿Para quÃ© sirve?</h1>
 <div id='contenido'>
-<ul><li>Ficheros de configuración</li>
+<ul><li>Ficheros de configuraciÃ³n</li>
 <li>Metadatos en CPAN (<var>META.yml</var>).</li>
 <li>Lista negra de spam en <a href='http://sixapart.com'>Movable Type</a>.</li>
-<li>Un CMS lo usa. No recuerdo cuál.</li>
+<li>Un CMS lo usa. No recuerdo cuÃ¡l.</li>
 </ul>
 </div>
 
 
 
-<h1>¿Cómo se usa?</h1>
-<script type='text/javascript'>
+<h1>Â¿CÃ³mo se usa?</h1>
 <div id='contenido'>
 <ul><li>Parser <a href='http://whytheluckystiff.net/syck/'><var>Syck</var></a>.</li>
-<li>Pero <a href='http://search.cpan.org/dist/YAML-Parser-Syck/'><var>YAML::Parser::Syck</var></a> no es demasiado útil.</li>
+<li>Pero <a href='http://search.cpan.org/dist/YAML-Parser-Syck/'><var>YAML::Parser::Syck</var></a> no es demasiado Ãºtil.</li>
 <li>PyYAML.</li>
-<li>Módulos <a href='http://search.cpan.org/search?query=YAML&mode=all'>YAML::</a>.</li>
-<li><var>xyx</var>: XML to YAML (y patrás).</li>
-<li><var>ysh</var>: YAML to Perl (y patrás).</li>
+<li>MÃ³dulos <a href='http://search.cpan.org/search?query=YAML&mode=all'>YAML::</a>.</li>
+<li><var>xyx</var>: XML to YAML (y patrÃ¡s).</li>
+<li><var>ysh</var>: YAML to Perl (y patrÃ¡s).</li>
 </ul>
 </div>
 
 
 
-<h1>Pero si es muy fácil</h1>
-<script type='text/javascript'>
+<h1>Pero si es muy fÃ¡cil</h1>
 <div id='contenido'>
-<ul><code>vamos: avé
-como: está
+<ul><code>vamos: avÃ©
+como: estÃ¡
 el: tema
 </code>
 <code>ysh > ---
-yaml> vamos: avé
-yaml> como: está
+yaml> vamos: avÃ©
+yaml> como: estÃ¡
 yaml> el: tema  
 yaml> ...
 $VAR1 = {
   'el' => 'tema',
-  'vamos' => 'avé',
-  'como' => 'está'
+  'vamos' => 'avÃ©',
+  'como' => 'estÃ¡'
 };
 </code>
 </ul>
@@ -149,25 +140,23 @@ $VAR1 = {
 
 
 <h1>Se puede mezclar todo</h1>
-<script type='text/javascript'>
 <div id='contenido'>
 <ul><code>tia: superintendente
 zapatilla: 
   - zipi 
   - zape
 </code>
-<li>También inline</li>
+<li>TambiÃ©n inline</li>
 <li>Matrices</li>
 <code>peaso matrix: [ Trinity, Neo, Morfeo ] </code>
 <li>Matrices asociativas</li>
-<code>hash: { name: María, foo: Juana } </code>
+<code>hash: { name: MarÃ­a, foo: Juana } </code>
 </ul>
 </div>
 
 
 
-<h1>Cariño, he reducido mi fichero</h1>
-<script type='text/javascript'>
+<h1>CariÃ±o, he reducido mi fichero</h1>
 <div id='contenido'>
 <ul><li>Un <a href='http://www.kuro5hin.org/story/2004/10/29/14225/062'>ejemplo</a>.</li>
 <li>XML</li>
@@ -198,22 +187,20 @@ zapatilla:
 
 
 <h1>Las caenas</h1>
-<script type='text/javascript'>
 <div id='contenido'>
 <ul><li>Simples</li>
 <code>"Cadena"</code>
 <li>Multilinea.</li>
 <code>'"Esto es una cadena
- con muchas líneas
- y otra más"'
+ con muchas lÃ­neas
+ y otra mÃ¡s"'
 </code>
 </ul>
 </div>
 
 
 
-<h1>Acuérdate de esto</h1>
-<script type='text/javascript'>
+<h1>AcuÃ©rdate de esto</h1>
 <div id='contenido'>
 <ul><li>Referencias</li>
 <code>- &telocuento Te lo digo
@@ -221,7 +208,7 @@ zapatilla:
 - Juanillo
 - *telocuento
 </code>
-<li>Que daría algo así</li>
+<li>Que darÃ­a algo asÃ­</li>
 <code>$VAR1 = [
 'Te lo digo',
 'Pepillo',
@@ -235,16 +222,15 @@ zapatilla:
 
 
 <h1>El marchamo</h1>
-<script type='text/javascript'>
 <div id='contenido'>
 <ul><li>El sistema de proceso de YAML divide los documentos en <em>nodos</em>.</li>
-<li>Cada nodo tiene un tipo, explícito o implícito.</li>
+<li>Cada nodo tiene un tipo, explÃ­cito o implÃ­cito.</li>
 <li>Cadenas</li>
-<code>!!str 35 pero no es un número</code>
+<code>!!str 35 pero no es un nÃºmero</code>
 <li>Pero puedes meter etiquetas propias.</li>
-<code>!medallilla del jamón</code>
-<li>Que crearía un nodo de tipo <em>medallilla</em>.</li>
-<li>Se usa también para crear nodos específicos de lenguaje</li>
+<code>!medallilla del jamÃ³n</code>
+<li>Que crearÃ­a un nodo de tipo <em>medallilla</em>.</li>
+<li>Se usa tambiÃ©n para crear nodos especÃ­ficos de lenguaje</li>
 <code>!ruby/range 10..20</code>
 </ul>
 </div>
@@ -252,7 +238,6 @@ zapatilla:
 
 
 <h1>Manantial de la abundancia</h1>
-<script type='text/javascript'>
 <div id='contenido'>
 <ul><li>Separa <em>documentos</em>.</li>
 <code>---
@@ -275,9 +260,8 @@ zapatilla:
 
 
 <h1>Ahora el camello</h1>
-<script type='text/javascript'>
 <div id='contenido'>
-<ul><li>Varios módulos desde Perl</li>
+<ul><li>Varios mÃ³dulos desde Perl</li>
 <li>Por supuesto, <a href='http://search.cpan.org/dist/YAML/'><var>YAML</var></a>.</li>
 <code>use YAML qw(LoadFile);
 my $yaml = LoadFile('peasoficheroescritoen.yaml');
@@ -287,33 +271,31 @@ my $yaml = LoadFile('peasoficheroescritoen.yaml');
 
 
 
-<h1>Pero todavía es más fácil.</h1>
-<script type='text/javascript'>
+<h1>Pero todavÃ­a es mÃ¡s fÃ¡cil.</h1>
 <div id='contenido'>
 <ul><li>Uso de <a href='http://search.cpan.org/~mdxi/Config-YAML-1.37/'>Config::YAML</a>.</li>
 <code>my $cartilla = Config::YAML->new( config => "~/.foorc",
-                           mi    => "mamá",
+                           mi    => "mamÃ¡",
                            me    => "mima",
-                           yo    => [ 'amo', 'a', 'mi','mamá' ],
+                           yo    => [ 'amo', 'a', 'mi','mamÃ¡' ],
                          );
 </code>
-<li>Que daría</li>
+<li>Que darÃ­a</li>
 <code>---
-mi: mamá
+mi: mamÃ¡
 me: mima
 yo:
   - amo
   - a
   - mi
-  - mamá
+  - mamÃ¡
 </code>
 </ul>
 </div>
 
 
 
-<h1>Más formas de escribir</h1>
-<script type='text/javascript'>
+<h1>MÃ¡s formas de escribir</h1>
 <div id='contenido'>
 <ul><li><a href="http://search.cpan.org/~nkuitse/IO-YAML-0.02/lib/IO/YAML.pm"><var>IO::YAML</var></a></li>
 <code>my $path = shift || 'my.yaml';
@@ -325,7 +307,7 @@ bless $tiqui, 'Pantuflo';
 my $zipi= { 'esto' => 'es','una' => [ 'estructura',[ { 'algo' => 'complicada'}], 'pero', $tiqui] };
 print $io $zipi;
 </code>
-<li>Que produciría</li>
+<li>Que producirÃ­a</li>
 <code>---
 esto: es
 una:
@@ -341,7 +323,6 @@ una:
 
 
 <h1>La joya de la corona</h1>
-<script type='text/javascript'>
 <div id='contenido'>
 <ul><li>Ruby y YAML, una pareja para el mal</li>
 <code>require 'yaml'
@@ -361,8 +342,7 @@ puts( [ 'amigueete', 'coleguilla', [ 'y', 'el', 'resto'] ].to_yaml )
 
 
 
-<h1>No se vayan todavía, aún hay más</h1>
-<script type='text/javascript'>
+<h1>No se vayan todavÃ­a, aÃºn hay mÃ¡s</h1>
 <div id='contenido'>
 <ul><li><a href='http://www.whytheluckystiff.net/okayRpc/'><var>OkayRPC</var></a> es un protocolo de llamada remota a procedimientos, similar a XML-RPC.</li>
 <code>--- !okay/rpc/begin
@@ -375,28 +355,26 @@ puts( [ 'amigueete', 'coleguilla', [ 'y', 'el', 'resto'] ].to_yaml )
 --- !okay/rpc/end
 </code>
 <li>Incluso <var>YPath</var> similar a XPath, es decir, un modo de seleccionar nodos de un documento YAML.</li>
-<li>Sólo está en la fase de Brainstorming.</li>
+<li>SÃ³lo estÃ¡ en la fase de Brainstorming.</li>
 </ul>
 </div>
 
 
 
 <h1>No todo es perfecto</h1>
-<script type='text/javascript'>
 <div id='contenido'>
-<ul><li>La indentación es un poco coñazo.</li>
-<li>Es difícil hacer estructuras indentadas.</li>
-<li>No está hecho para cosas complicadas.</li>
+<ul><li>La indentaciÃ³n es un poco coÃ±azo.</li>
+<li>Es difÃ­cil hacer estructuras indentadas.</li>
+<li>No estÃ¡ hecho para cosas complicadas.</li>
 </ul>
 </div>
 
 
 
 <h1>Para finalizar, YuyuPress</h1>
-<script type='text/javascript'>
 <div id='contenido'>
-<ul><li>Sistema de presentación basado en YAML.</li>
-<li>Es esto mismo que estáis viendo.</li>
+<ul><li>Sistema de presentaciÃ³n basado en YAML.</li>
+<li>Es esto mismo que estÃ¡is viendo.</li>
 <li><a href='http://search.cpan.org/~jmerelo/YAML-YuyuPress-0.03/'><var>YAML::YuyuPress 0.03</var></a> calentito, de hoy mismo.</li>
 <li>Lleva su propio servidor web.</li>
 <li>Usa el Template Toolkit.</li>
@@ -407,7 +385,6 @@ puts( [ 'amigueete', 'coleguilla', [ 'y', 'el', 'resto'] ].to_yaml )
 
 
 <h1>Sostodo, amigos.</h1>
-<script type='text/javascript'>
 <div id='contenido'>
 <ul><li><BIG>GRACIAS</big></li>
 </ul>
@@ -416,65 +393,4 @@ puts( [ 'amigueete', 'coleguilla', [ 'y', 'el', 'resto'] ].to_yaml )
 
 
 </body>
-
-<SCRIPT language="Javascript">
-<!--
-
-// FILE ARCHIVED ON 20070509163309 AND RETRIEVED FROM THE
-// INTERNET ARCHIVE ON 20080522133613.
-// JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
-// ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
-// SECTION 108(a)(3)).
-
-   var sWayBackCGI = "http://web.archive.org/web/20070509163309/";
-
-   function xResolveUrl(url) {
-      var image = new Image();
-      image.src = url;
-      return image.src;
-   }
-   function xLateUrl(aCollection, sProp) {
-      var i = 0;
-      for(i = 0; i < aCollection.length; i++) {
-         if (typeof(aCollection[i][sProp]) == "string") { 
-          if (aCollection[i][sProp].indexOf("mailto:") == -1 &&
-             aCollection[i][sProp].indexOf("javascript:") == -1) {
-            if(aCollection[i][sProp].indexOf("http") == 0) {
-                aCollection[i][sProp] = sWayBackCGI + aCollection[i][sProp];
-            } else {
-                aCollection[i][sProp] = sWayBackCGI + xResolveUrl(aCollection[i][sProp]);
-            }
-         }
-         }
-      }
-   }
-
-   xLateUrl(document.getElementsByTagName("IMG"),"src");
-   xLateUrl(document.getElementsByTagName("A"),"href");
-   xLateUrl(document.getElementsByTagName("AREA"),"href");
-   xLateUrl(document.getElementsByTagName("OBJECT"),"codebase");
-   xLateUrl(document.getElementsByTagName("OBJECT"),"data");
-   xLateUrl(document.getElementsByTagName("APPLET"),"codebase");
-   xLateUrl(document.getElementsByTagName("APPLET"),"archive");
-   xLateUrl(document.getElementsByTagName("EMBED"),"src");
-   xLateUrl(document.getElementsByTagName("BODY"),"background");
-   var forms = document.getElementsByTagName("FORM");
-   if (forms) {
-       var j = 0;
-       for (j = 0; j < forms.length; j++) {
-              f = forms[j];
-              if (typeof(f.action)  == "string") {
-                 if(typeof(f.method)  == "string") {
-                     if(typeof(f.method) != "post") {
-                        f.action = sWayBackCGI + f.action;
-                     }
-                  }
-              }
-        }
-    }
-
-
-//-->
-</SCRIPT>
-
 </html>
