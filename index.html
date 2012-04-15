@@ -3,110 +3,249 @@
 <head>
     <meta charset="utf-8" />
     <title>Barcelona.pm - Barcelona Perl Mongers</title>
-    <style type="text/css">
-        body {
-            margin-left: 8em;
-            margin-right: 8em;
-            margin-top: 2em;
-            margin-bottom: 2em;
-        }
-        h1 {
-            margin-bottom: 1em;
-            text-align: center;
-        }
-        h2 {
-            text-transform: uppercase;
-        }
-        pre {
-            border: 1px solid black;
-            padding: 0.5em;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 0px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
     </style>
+    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 </head>
 <body>
-<h1>Barcelona.pm</h1>
-<h2>Name</h2>
-<p>
-    Barcelona.pm - Barcelona Perl Mongers
-</p>
 
-<h2>Synopsis</h2>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+
+        <a class="brand" href="#">Barcelona.pm</a>
+
+        <div class="nav-collapse">
+          <ul class="nav">
+            <li class="active"><a href="#name">Name</a></li>
+            <li>
+              <a href="#synopsis">Synopsis</a>
+            </li>
+            <li class="dropdown" id="menu-description">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#menu-description">
+                Description
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#meetings">Meetings</a></li>
+                <li><a href="#events">Events</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#caveats">Caveats</a>
+            </li>
+            <li>
+              <a href="#bugs">Bugs</a>
+            </li>
+            <li>
+              <a href="#files">Files</a>
+            </li>
+            <li class="dropdown" id="menu-see-also">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#menu-see-also">
+                See Also
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#news">News</a></li>
+                <li><a href="#tutorials">Tutorials</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#authors">Authors</a>
+            </li>
+          </ul>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>Barcelona.pm</h1>
+        <p>Barcelona Perl Mongers</p>
+
+      </div>
+
+      <div class="row">
+        <div class="span3" id="name">
+          <h2>Name</h2>
+        </div>
+        <div class="span9">
+          <p>Barcelona.pm &mdash; Barcelona Perl Mongers</p>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="span3" id="synopsis">
+          <h2>Synopsis</h2>
+        </div>
+        <div class="span9">
 <pre>
-    use Perl;
-    use Acme::PM::Barcelona;
+use Perl;
+use Acme::PM::Barcelona;
 </pre>
+        </div>
+      </div>
 
-<h2>Description</h2>
-<p>
-    Barcelona.pm is a group of people interested in <a href="http://www.perl.org/">Perl</a>
-    (also known as Perl Mongers) that are living in <a href="http://www.bcn.es/">Barcelona</a>.
-    Interestingly enough, there's a lot of people in the group that happen to be living outside 
-    Barcelona too, so anyone is welcome aboard. Please, start subscribing the
-    <a href="http://mail.pm.org/mailman/listinfo/barcelona-pm">mailing list</a>
-    and introduce yourself.
-</p>
-<h3>Meetings</h3>
-<p>
-    Monthly meetings take place the last Thursday.
-    Next meeting is due on <a href="http://linkd.in/ysBcSu" title="RSVP meeting on LinkedIn">Thu, Feb 23 2012 20:00 (CET)</a>.
-</p>
-<h3>Events</h3>
-<p>
-    Barcelona.pm will give a
-    <a href="http://curs.perl.cat/" title="Curs avançat de Perl 2012">Perl advanced class</a>
-    on March 10th.
-    We are granted access to a classroom thanks to the 
-    <a href="http://www.ac.upc.edu/" title="DAC (BarcelonaTech UPC)">Computer Architecture Department</a>
-    at
-    <a href="Universitat Politècnica de Catalunya (BarcelonaTech)" title="">BarcelonaTech (UPC)</a>
-    and decided to give
-    our time and expertise promoting Perl once more. So for a small fee we feed and
-    give a t-shirt to the attendands. The class will be in Catalan or Spanish,
-    as each lecturer sees fit.
-</p>
+      <div class="row" id="description">
+        <div class="span3">
+          <h2>Description</h2>
+        </div>
+        <div class="span9">
+          <p>
+            Barcelona.pm is a group of people interested in <a href="http://www.perl.org/">Perl</a>
+            (also known as Perl Mongers) that are living in <a href="http://www.bcn.es/">Barcelona</a>.
+            Interestingly enough, there's a lot of people in the group that happen to be living outside 
+            Barcelona too, so anyone is welcome aboard. Please, start subscribing the
+            <a href="http://mail.pm.org/mailman/listinfo/barcelona-pm">mailing list</a>
+            and introduce yourself.
+          </p>
+        </div>
+      </div>
 
-<h2>Caveats</h2>
-<p>
-    Perl can become very, very addictive! Don't mix it with other drugs and ask your doctor in case of intoxication.
-</p>
+      <div class="row" id="meetings">
+        <div class="span3">
+          <h3>Meetings</h3>
+        </div>
+        <div class="span9">
+          <p>
+            Monthly meetings take place the last Thursday.
+            Next meeting is due on
+            <a href="http://linkd.in/ILyKxc" title="RSVP meeting on LinkedIn">Thu, Apr 26 2012 20:00 (CET)</a>.
+          </p>
+        </div>
+      </div>
 
-<h2>Bugs</h2>
-<p>
-    No, thanks. We prefer beers and <em>patatas bravas</em>.
-</p>
+      <div class="row" id="events">
+        <div class="span3">
+          <h3>Events</h3>
+        </div>
+        <div class="span9">
+          <p>
+            Barcelona.pm organizes courses for beginners and advanced Perl programmers.
+            You can find the information for those events on
+            <a href="http://curs.perl.cat/" title="Curs Perl website ">Curs Perl</a>.
+          </p>
+        </div>
+      </div>
 
-<h2>Files</h2>
-<p>
-    Sure! You'll find most of them on <a href="BarcelonaPerlMongers.html">the old website pages</a>.
-</p>
-<h2>See Also</h2>
-<p>
-    Don't miss other <a href="http://www.pm.org/">Perl Mongers groups</a>.
-</p>
+      <div class="row" id="caveats">
+        <div class="span3">
+          <h2>Caveats</h2>
+        </div>
+        <div class="span9">
+          <p>
+            Perl can become very, very addictive! Don't mix it with other drugs and ask your doctor in case of intoxication.
+          </p>
+        </div>
+      </div>
 
-<h3>News</h3>
-<ul>
-<li><a href="http://perlnews.org/">Perl news</a></li>
-<li><a href="http://perlsphere.net/">Perlsphere</a> aggregated Perl news</li>
-<li><a href="http://ironman.enlightenedperl.org/">Ironman</a> aggregated Perl news</a></li>
-<li><a href="http://perlbuzz.com/">Perl Buzz</a> news collection</li>
-<li><a href="http://perlweekly.com/">Perl Weekly</a> news</li>
-</ul>
+      <div class="row" id="bugs">
+        <div class="span3">
+          <h2>Bugs</h2>
+        </div>
+        <div class="span9">
+          <p>
+            No, thanks. We prefer beers and <em>patatas bravas</em>.
+          </p>
+        </div>
+      </div>
 
-<h3>Tutorials</h3>
-<ul>
-<li>A collection of good <a href="http://perl-tutorial.org/">Perl tutorials</a> by Christian Walde</li>
-<li><a href="http://learn.perl.org/tutorials/">Perl tutorials</a> in <a href="http://learn.perl.org/">learn.perl.org</a></li>
-<li><a href="http://onyxneon.com/books/modern_perl/">Modern Perl Book</a> by chromatic</li>
-<li><a href="http://szabgab.com/perl_tutorial.html">Perl Tutorial</a> by Gabor Szabo</li>
-</ul>
+      <div class="row" id="files">
+        <div class="span3">
+          <h2>Files</h2>
+        </div>
+        <div class="span9">
+          <p>
+            Sure! You'll find most of them on <a href="BarcelonaPerlMongers.html">the old website pages</a>.
+          </p>
+        </div>
+      </div>
 
-<h2>Authors</h2>
-<p>
-    We run a mailing list to keep us in touch. You're welcome to
-    <a href="http://mail.pm.org/mailman/listinfo/barcelona-pm">join us</a>
-    or take a closer look to our
-    <a href="http://mail.pm.org/pipermail/barcelona-pm/">list archives</a>.
-</p>
+      <div class="row" id="see-also">
+        <div class="span3">
+          <h2>See Also</h2>
+        </div>
+        <div class="span9">
+          <p>
+            Don't miss other <a href="http://www.pm.org/">Perl Mongers groups</a>.
+          </p>
+        </div>
+      </div>
+
+      <div class="row" id="news">
+        <div class="span3">
+          <h3>News</h3>
+        </div>
+        <div class="span9">
+          <ul>
+          <li><a href="http://perlnews.org/">Perl news</a></li>
+          <li><a href="http://perlsphere.net/">Perlsphere</a> aggregated Perl news</li>
+          <li><a href="http://ironman.enlightenedperl.org/">Ironman</a> aggregated Perl news</a></li>
+          <li><a href="http://perlbuzz.com/">Perl Buzz</a> news collection</li>
+          <li><a href="http://perlweekly.com/">Perl Weekly</a> news</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row" id="tutorials">
+        <div class="span3">
+          <h3>Tutorials</h3>
+        </div>
+        <div class="span9">
+          <ul>
+          <li>A collection of good <a href="http://perl-tutorial.org/">Perl tutorials</a> by Christian Walde</li>
+          <li><a href="http://learn.perl.org/tutorials/">Perl tutorials</a> in <a href="http://learn.perl.org/">learn.perl.org</a></li>
+          <li><a href="http://onyxneon.com/books/modern_perl/">Modern Perl Book</a> by chromatic</li>
+          <li><a href="http://szabgab.com/perl_tutorial.html">Perl Tutorial</a> by Gabor Szabo</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row" id="authors">
+        <div class="span3">
+          <h2>Authors</h2>
+        </div>
+        <div class="span9">
+          <p>
+            We run a mailing list to keep us in touch. You're welcome to
+            <a href="http://mail.pm.org/mailman/listinfo/barcelona-pm">join us</a>
+            or take a closer look to our
+            <a href="http://mail.pm.org/pipermail/barcelona-pm/">list archives</a>.
+          </p>
+        </div>
+      </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
