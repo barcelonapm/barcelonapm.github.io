@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>Barcelona.pm - Barcelona Perl Mongers - Perl programmers in Barcelona</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,13 @@
     <style>
       body {
         padding-top: 0px; /* 60px to make the container go all the way to the bottom of the topbar */
+        font-size: 16px;
+      }
+      .row h1, .row h2, .row h3, .row h4 {
+        margin-top: 0;
+      }
+      .row {
+        margin-bottom: 20px;
       }
     </style>
     <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
@@ -19,33 +26,26 @@
     <!--[if lt IE 9]>
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-</head>
-<body>
+  </head>
 
-    <div class="navbar">
-      <div class="navbar-inner">
-        <div class="container">
-
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </a>
-
-        <a class="brand" href="#">Barcelona.pm</a>
-
-        <div class="nav-collapse">
-          <ul class="nav">
-            <li class="active"><a href="#name">Name</a></li>
-            <li>
-              <a href="#synopsis">Synopsis</a>
-            </li>
-            <li class="dropdown" id="menu-description">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#menu-description">
-                Description
-                <b class="caret"></b>
-              </a>
+  <body>
+    <div class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="active navbar-brand" href="#">Barcelona.pm</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="#name">Name</a></li>
+            <li><a href="#synopsis">Synopsis</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Description <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#meetings">Meetings</a></li>
                 <li><a href="#events">Events</a></li>
@@ -55,11 +55,8 @@
             <li>
               <a href="#files">Files</a>
             </li>
-            <li class="dropdown" id="menu-see-also">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#menu-see-also">
-                See Also
-                <b class="caret"></b>
-              </a>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">See also <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#groups">Groups</a></li>
                 <li><a href="#blogs">Blogs</a></li>
@@ -78,37 +75,31 @@
             </li>
           </ul>
         </div>
-
-        </div>
       </div>
     </div>
 
     <div class="container">
-
       <!-- Main hero unit for a primary marketing message or call to action -->
-      <div class="hero-unit">
-      
-
+      <div class="jumbotron">
         <h1>Barcelona.pm</h1>
         <p>Barcelona Perl Mongers &mdash; Perl programmers in Barcelona</p>
-
       </div>
 
       <div class="row">
-        <div class="span3" id="name">
+        <div class="col-md-3" id="name">
           <h2>Name</h2>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <p>Barcelona.pm &mdash; Barcelona Perl Mongers</p>
         </div>
       </div>
 
 
       <div class="row">
-        <div class="span3" id="synopsis">
+        <div class="col-md-3" id="synopsis">
           <h2>Synopsis</h2>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
 <pre>
 use Perl;
 use Acme::PM::Barcelona;
@@ -117,10 +108,10 @@ use Acme::PM::Barcelona;
       </div>
 
       <div class="row" id="description">
-        <div class="span3">
+        <div class="col-md-3">
           <h2>Description</h2>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <p>
             Barcelona.pm is a group of people interested in <a href="http://www.perl.org/">Perl programming</a>
             (also known as Perl Mongers) that are living in <a href="http://www.bcn.es/">Barcelona</a>.
@@ -133,10 +124,10 @@ use Acme::PM::Barcelona;
       </div>
 
       <div class="row" id="meetings">
-        <div class="span3">
+        <div class="col-md-3">
           <h3>Meetings</h3>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <p>
             Monthly meetings usually take place the last Thursday.
             See our <a href="http://www.meetup.com/barcelonapm/" title="Barcelona.pm Meetup Group">meetup page</a> for details.
@@ -145,10 +136,10 @@ use Acme::PM::Barcelona;
       </div>
 
       <div class="row" id="events">
-        <div class="span3">
+        <div class="col-md-3">
           <h3>Events</h3>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <p>
             Once a year, the Barcelona Perl Mongers organizes the Perl & Friends Conference. Its main purpose
             is to gather people with common interests in a day packed of talks, not necessarily Perl related.
@@ -181,10 +172,10 @@ use Acme::PM::Barcelona;
       </div>
 
       <div class="row" id="social">
-        <div class="span3">
+        <div class="col-md-3">
           <h3>Social</h3>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <ul>
           <li>Channel #barcelona.pm on IRC server irc.perl.org</li>
           <li><a href="http://www.meetup.com/barcelonapm/">Meetup</a></li>
@@ -196,10 +187,10 @@ use Acme::PM::Barcelona;
       </div>
 
       <div class="row" id="files">
-        <div class="span3">
+        <div class="col-md-3">
           <h2>Files</h2>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <p>
             Sure! There's a lot of them:
             <ul>
@@ -213,18 +204,18 @@ use Acme::PM::Barcelona;
       </div>
 
       <div class="row" id="see-also">
-        <div class="span3">
+        <div class="col-md-3">
           <h2>See Also</h2>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
         </div>
       </div>
 
       <div class="row" id="groups">
-        <div class="span3">
+        <div class="col-md-3">
           <h3>Groups</h3>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <ul>
           <li><a href="http://madrid.pm.org/">Madrid Perl Mongers</a></li>
           <li><a href="https://metacpan.org/module/Acme::CPANAuthors::Catalonian">Catalonian CPAN Authors</a></li>
@@ -236,10 +227,10 @@ use Acme::PM::Barcelona;
       </div>
 
       <div class="row" id="blogs">
-        <div class="span3">
+        <div class="col-md-3">
           <h3>Blogs</h3>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <ul>
           <li><a href="http://blogs.perl.org/">Perl blogs</a></li>
           <li><a href="http://ironman.enlightenedperl.org/">Ironman</a> aggregated Perl news</a></li>
@@ -249,10 +240,10 @@ use Acme::PM::Barcelona;
       </div>
 
       <div class="row" id="news">
-        <div class="span3">
+        <div class="col-md-3">
           <h3>News</h3>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <ul>
           <li><a href="http://perlbuzz.com/">Perl Buzz</a> news collection</li>
           <li><a href="http://perlnews.org/">Perl news</a></li>
@@ -263,10 +254,10 @@ use Acme::PM::Barcelona;
       </div>
 
       <div class="row" id="tutorials">
-        <div class="span3">
+        <div class="col-md-3">
           <h3>Tutorials</h3>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <ul>
           <li>Collection of <a href="http://perl-tutorial.org/">Perl tutorials</a> by Christian Walde</li>
           <li><a href="http://learn.perl.org/tutorials/">Perl tutorials</a> in <a href="http://learn.perl.org/">learn.perl.org</a></li>
@@ -278,10 +269,10 @@ use Acme::PM::Barcelona;
       </div>
 
       <div class="row" id="caveats">
-        <div class="span3">
+        <div class="col-md-3">
           <h2>Caveats</h2>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <p>
             Perl programming can become very, very addictive! Don't mix it with other drugs and ask your doctor in case of intoxication.
           </p>
@@ -289,10 +280,10 @@ use Acme::PM::Barcelona;
       </div>
 
       <div class="row" id="bugs">
-        <div class="span3">
+        <div class="col-md-3">
           <h2>Bugs</h2>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <p>
             No, thanks. We prefer beers and <em>patatas bravas</em>.
           </p>
@@ -300,10 +291,10 @@ use Acme::PM::Barcelona;
       </div>
 
       <div class="row" id="authors">
-        <div class="span3">
+        <div class="col-md-3">
           <h2>Authors</h2>
         </div>
-        <div class="span9">
+        <div class="col-md-9">
           <p>
             We run a mailing list to keep us in touch. You're welcome to
             <a href="http://mail.pm.org/mailman/listinfo/barcelona-pm">join us</a>
@@ -319,7 +310,7 @@ use Acme::PM::Barcelona;
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
-</body>
+  </body>
 </html>
